@@ -1,0 +1,316 @@
+openapi: 3.0.0
+info:
+  title: LinkAce API
+  version: '1.0'
+  license:
+    name: MIT
+  contact:
+    url: 'https://github.com/Kovah/LinkAce'
+  description: The official documentation of the LinkAce API.
+servers:
+  - url: 'http://linkace.localhost'
+paths:
+  /api/v1/links:
+    get:
+      summary: Your GET endpoint
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  current_page:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Link'
+                  first_page_url:
+                    type: string
+                    example: 'http://linkace.localhost/api/v1/links?page=1'
+                  from:
+                    type: integer
+                  last_page:
+                    type: integer
+                  last_page_url:
+                    type: string
+                    example: 'http://linkace.localhost/api/v1/links?page=7'
+                  next_page_url:
+                    type:
+                      - string
+                      - 'null'
+                  path:
+                    type: string
+                  per_page:
+                    type: string
+                  prev_page_url:
+                    type:
+                      - string
+                      - 'null'
+                  to:
+                    type: integer
+                  total:
+                    type: integer
+        '401':
+          description: Unauthorized
+      operationId: get-api-v1-links
+      description: ''
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - application/json
+          in: header
+          name: accept
+          required: true
+      security:
+        - api_token: []
+    post:
+      summary: ''
+      operationId: post-api-v1-links
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Link'
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LinkRequest'
+        description: ''
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - application/json
+          in: header
+          name: accept
+          required: true
+      description: ''
+  '/api/v1/links/{link_id}':
+    parameters:
+      - schema:
+          type: integer
+        name: link_id
+        in: path
+        required: true
+    get:
+      summary: ''
+      operationId: get-api-v1-links-link_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Link'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - application/json
+          in: header
+          name: accept
+          required: true
+      security:
+        - api_token: []
+    patch:
+      summary: ''
+      operationId: patch-api-v1-links-link_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Link'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LinkRequest'
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - application/json
+          in: header
+          name: accept
+          required: true
+      security:
+        - api_token: []
+    delete:
+      summary: ''
+      operationId: delete-api-v1-links-link_id
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - application/json
+          in: header
+          name: accept
+          required: true
+components:
+  schemas:
+    Link:
+      title: Link
+      type: object
+      description: ''
+      x-examples:
+        Example Response for DuckDuckGo.com:
+          id: 85
+          user_id: 1
+          url: 'https://duckduckgo.com'
+          title: 'DuckDuckGo — Privacy, simplified.'
+          description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
+          icon: fa fa-link
+          is_private: false
+          status: 1
+          check_disabled: false
+          created_at: '2020-03-09T19:33:23.000000Z'
+          updated_at: '2020-03-09T19:33:23.000000Z'
+          deleted_at: null
+      properties:
+        id:
+          type: integer
+          minimum: 1
+          example: 84
+        user_id:
+          type: integer
+          example: 1
+          minimum: 1
+        url:
+          type: string
+          example: 'https://duckduckgo.com'
+        title:
+          type: string
+        description:
+          type:
+            - string
+            - 'null'
+        icon:
+          type:
+            - string
+            - 'null'
+          pattern: fa fa-link
+        is_private:
+          type: boolean
+        status:
+          type: integer
+          enum:
+            - 1
+            - 2
+            - 3
+        check_disabled:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          pattern: '2020-03-09T19:33:23.000000Z'
+        updated_at:
+          type: string
+          format: date-time
+          pattern: '2020-03-09T19:33:23.000000Z'
+        deleted_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          pattern: '2020-03-09T19:33:23.000000Z'
+      required:
+        - id
+        - url
+        - title
+        - description
+        - is_private
+    ValidationError:
+      title: ValidationError
+      type: object
+      properties:
+        message:
+          type: string
+          example: The given data was invalid.
+        errors:
+          type: object
+          properties:
+            form_key:
+              type: array
+              items:
+                type: string
+              uniqueItems: false
+    LinkRequest:
+      title: Link Request
+      type: object
+      description: ''
+      x-examples:
+        Example Request for DuckDuckGo.com:
+          url: 'https://duckduckgo.com'
+          title: 'DuckDuckGo — Privacy, simplified.'
+          description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
+          is_private: '0'
+      properties:
+        url:
+          type: string
+          example: 'https://duckduckgo.com'
+        title:
+          type: string
+        description:
+          type:
+            - string
+            - 'null'
+        is_private:
+          type: string
+          enum:
+            - '0'
+            - '1'
+      required:
+        - url
+        - title
+        - description
+        - is_private
+  securitySchemes:
+    api_token:
+      type: http
+      scheme: bearer
+      description: ''
