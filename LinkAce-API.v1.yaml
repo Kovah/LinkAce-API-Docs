@@ -27,8 +27,7 @@ paths:
       parameters:
         - schema:
             type: string
-            enum:
-              - application/json
+            default: application/json
           in: header
           name: accept
           required: true
@@ -82,8 +81,7 @@ paths:
       parameters:
         - schema:
             type: string
-            enum:
-              - application/json
+            default: application/json
           in: header
           name: accept
           required: true
@@ -112,8 +110,7 @@ paths:
       parameters:
         - schema:
             type: string
-            enum:
-              - application/json
+            default: application/json
           in: header
           name: accept
           required: true
@@ -148,8 +145,7 @@ paths:
       parameters:
         - schema:
             type: string
-            enum:
-              - application/json
+            default: application/json
           in: header
           name: accept
           required: true
@@ -173,8 +169,7 @@ paths:
       parameters:
         - schema:
             type: string
-            enum:
-              - application/json
+            default: application/json
           in: header
           name: accept
           required: true
@@ -429,6 +424,7 @@ components:
             $ref: '#/components/schemas/Link'
         current_page:
           type: integer
+      description: ''
   securitySchemes:
     api_token:
       type: http
