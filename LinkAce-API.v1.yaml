@@ -16,48 +16,14 @@ paths:
       responses:
         '200':
           description: OK
-          headers: {}
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  current_page:
-                    type: integer
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Link'
-                  first_page_url:
-                    type: string
-                    example: 'http://linkace.localhost/api/v1/links?page=1'
-                  from:
-                    type: integer
-                  last_page:
-                    type: integer
-                  last_page_url:
-                    type: string
-                    example: 'http://linkace.localhost/api/v1/links?page=7'
-                  next_page_url:
-                    type:
-                      - string
-                      - 'null'
-                  path:
-                    type: string
-                  per_page:
-                    type: string
-                  prev_page_url:
-                    type:
-                      - string
-                      - 'null'
-                  to:
-                    type: integer
-                  total:
-                    type: integer
+                $ref: '#/components/schemas/LinkPaginator'
         '401':
           description: Unauthorized
       operationId: get-api-v1-links
-      description: ''
+      description: Get all links.
       parameters:
         - schema:
             type: string
@@ -121,7 +87,7 @@ paths:
           in: header
           name: accept
           required: true
-      description: ''
+      description: Create a new Link.
   '/api/v1/links/{link_id}':
     parameters:
       - schema:
@@ -153,7 +119,7 @@ paths:
           required: true
       security:
         - api_token: []
-      description: ''
+      description: 'Get one specific link, including his lists and tags.'
     patch:
       summary: 'Links: Update'
       operationId: patch-api-v1-links-link_id
@@ -189,6 +155,7 @@ paths:
           required: true
       security:
         - api_token: []
+      description: Update one specific link.
     delete:
       summary: 'Links: Delete'
       operationId: delete-api-v1-links-link_id
@@ -211,6 +178,7 @@ paths:
           in: header
           name: accept
           required: true
+      description: Delete one specific link.
 components:
   schemas:
     Link:
@@ -425,6 +393,42 @@ components:
           created_at: '2019-02-24T20:39:25.000000Z'
           updated_at: '2019-02-24T20:39:25.000000Z'
           deleted_at: null
+    LinkPaginator:
+      title: 'Paginator: Links'
+      type: object
+      properties:
+        total:
+          type: integer
+        to:
+          type: integer
+        prev_page_url:
+          type:
+            - string
+            - 'null'
+        per_page:
+          type: string
+        path:
+          type: string
+        next_page_url:
+          type:
+            - string
+            - 'null'
+        last_page_url:
+          type: string
+          example: 'http://linkace.localhost/api/v1/links?page=7'
+        last_page:
+          type: integer
+        from:
+          type: integer
+        first_page_url:
+          type: string
+          example: 'http://linkace.localhost/api/v1/links?page=1'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+        current_page:
+          type: integer
   securitySchemes:
     api_token:
       type: http
