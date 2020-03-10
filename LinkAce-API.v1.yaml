@@ -153,6 +153,7 @@ paths:
           required: true
       security:
         - api_token: []
+      description: ''
     patch:
       summary: 'Links: Update'
       operationId: patch-api-v1-links-link_id
@@ -277,17 +278,17 @@ components:
         created_at:
           type: string
           format: date-time
-          pattern: '2020-03-09T19:33:23.000000Z'
+          example: '2020-03-09T19:33:23.000000Z'
         updated_at:
           type: string
           format: date-time
-          pattern: '2020-03-09T19:33:23.000000Z'
+          example: '2020-03-09T19:33:23.000000Z'
         deleted_at:
           type:
             - string
             - 'null'
           format: date-time
-          pattern: '2020-03-09T19:33:23.000000Z'
+          example: '2020-03-09T19:33:23.000000Z'
     ValidationError:
       title: 'Model: ValidationError'
       type: object
@@ -350,7 +351,7 @@ components:
       required:
         - url
     List:
-      title: List
+      title: 'Model: List'
       type: object
       properties:
         id:
@@ -390,7 +391,7 @@ components:
           updated_at: '2020-01-24T13:13:02.000000Z'
           deleted_at: null
     Tag:
-      title: Tag
+      title: 'Model: Tag'
       type: object
       properties:
         id:
