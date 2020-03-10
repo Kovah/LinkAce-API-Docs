@@ -227,6 +227,8 @@ components:
           is_private: false
           status: 1
           check_disabled: false
+          lists: []
+          tags: []
           created_at: '2020-03-09T19:33:23.000000Z'
           updated_at: '2020-03-09T19:33:23.000000Z'
           deleted_at: null
@@ -241,6 +243,7 @@ components:
           minimum: 1
         url:
           type: string
+          format: uri
           example: 'https://duckduckgo.com'
         title:
           type: string
@@ -263,6 +266,14 @@ components:
             - 3
         check_disabled:
           type: boolean
+        lists:
+          type: array
+          items:
+            $ref: '#/components/schemas/List'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
         created_at:
           type: string
           format: date-time
@@ -277,12 +288,6 @@ components:
             - 'null'
           format: date-time
           pattern: '2020-03-09T19:33:23.000000Z'
-      required:
-        - id
-        - url
-        - title
-        - description
-        - is_private
     ValidationError:
       title: 'Model: ValidationError'
       type: object
@@ -318,6 +323,7 @@ components:
       properties:
         url:
           type: string
+          format: uri
           example: 'https://duckduckgo.com'
         title:
           type: string
@@ -343,6 +349,81 @@ components:
           type: boolean
       required:
         - url
+    List:
+      title: List
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        name:
+          type: string
+        description:
+          type:
+            - string
+            - 'null'
+        is_private:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        updated_at:
+          type: string
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        deleted_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+      x-examples:
+        Example of a List:
+          id: 3
+          user_id: 1
+          name: CSS Frameworks
+          description: null
+          is_private: false
+          created_at: '2020-01-24T13:13:02.000000Z'
+          updated_at: '2020-01-24T13:13:02.000000Z'
+          deleted_at: null
+    Tag:
+      title: Tag
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        name:
+          type: string
+        is_private:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        updated_at:
+          type: string
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        deleted_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+      x-examples:
+        Example of a Tag:
+          id: 118
+          user_id: 1
+          name: alternative
+          is_private: false
+          created_at: '2019-02-24T20:39:25.000000Z'
+          updated_at: '2019-02-24T20:39:25.000000Z'
+          deleted_at: null
   securitySchemes:
     api_token:
       type: http
