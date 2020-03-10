@@ -66,6 +66,25 @@ paths:
           in: header
           name: accept
           required: true
+        - schema:
+            type: string
+            enum:
+              - id
+              - url
+              - title
+              - description
+              - is_private
+              - status
+              - check_disabled
+          in: query
+          name: order_by
+        - schema:
+            type: string
+            enum:
+              - asc
+              - desc
+          in: query
+          name: order_dir
       security:
         - api_token: []
     post:
@@ -288,7 +307,14 @@ components:
           url: 'https://duckduckgo.com'
           title: 'DuckDuckGo — Privacy, simplified.'
           description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
-          is_private: '0'
+          lists:
+            - 5
+          tags:
+            - 9
+            - 13
+            - 29
+          is_private: false
+          check_disabled: false
       properties:
         url:
           type: string
@@ -296,19 +322,27 @@ components:
         title:
           type: string
         description:
-          type:
-            - string
-            - 'null'
-        is_private:
           type: string
+        lists:
+          type: array
           enum:
             - '0'
             - '1'
+          items:
+            type: integer
+        tags:
+          type: array
+          enum:
+            - '0'
+            - '1'
+          items:
+            type: integer
+        is_private:
+          type: boolean
+        check_disabled:
+          type: boolean
       required:
         - url
-        - title
-        - description
-        - is_private
   securitySchemes:
     api_token:
       type: http
