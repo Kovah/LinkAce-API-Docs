@@ -41,6 +41,8 @@ paths:
               - is_private
               - status
               - check_disabled
+              - created_at
+              - updated_at
           in: query
           name: order_by
         - schema:
@@ -174,6 +176,167 @@ paths:
           name: accept
           required: true
       description: Delete one specific link.
+  /api/v1/lists:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPaginator'
+        '401':
+          description: Unauthorized
+      operationId: get-api-v1-lists
+      description: ''
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+        - schema:
+            type: string
+            enum:
+              - id
+              - name
+              - description
+              - is_private
+              - created_at
+              - updated_at
+          in: query
+          name: order_by
+        - schema:
+            type: string
+            enum:
+              - asc
+              - desc
+          in: query
+          name: order_dir
+      requestBody: {}
+    post:
+      summary: ''
+      operationId: post-api-v1-lists
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List'
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListRequest'
+  '/api/v1/lists/{list_id}':
+    parameters:
+      - schema:
+          type: string
+        name: list_id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListWithLinks'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      operationId: get-api-v1-lists-list_id
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+    patch:
+      summary: ''
+      operationId: patch-api-v1-lists-list_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: aplicaton/json
+          in: header
+          name: accept
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListRequest'
+    delete:
+      summary: ''
+      operationId: delete-api-v1-lists-list_id
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
 components:
   schemas:
     Link:
@@ -267,52 +430,6 @@ components:
               items:
                 type: string
               uniqueItems: false
-    LinkRequest:
-      title: 'Model: Link Request'
-      type: object
-      description: ''
-      x-examples:
-        Example Request for DuckDuckGo.com:
-          url: 'https://duckduckgo.com'
-          title: 'DuckDuckGo — Privacy, simplified.'
-          description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
-          lists:
-            - 5
-          tags:
-            - 9
-            - 13
-            - 29
-          is_private: false
-          check_disabled: false
-      properties:
-        url:
-          type: string
-          format: uri
-          example: 'https://duckduckgo.com'
-        title:
-          type: string
-        description:
-          type: string
-        lists:
-          type: array
-          enum:
-            - '0'
-            - '1'
-          items:
-            type: integer
-        tags:
-          type: array
-          enum:
-            - '0'
-            - '1'
-          items:
-            type: integer
-        is_private:
-          type: boolean
-        check_disabled:
-          type: boolean
-      required:
-        - url
     List:
       title: 'Model: List'
       type: object
@@ -425,6 +542,150 @@ components:
         current_page:
           type: integer
       description: ''
+    ListPaginator:
+      title: 'Paginator: Lists'
+      type: object
+      properties:
+        total:
+          type: integer
+        to:
+          type: integer
+        prev_page_url:
+          type:
+            - string
+            - 'null'
+        per_page:
+          type: string
+        path:
+          type: string
+        next_page_url:
+          type:
+            - string
+            - 'null'
+        last_page_url:
+          type: string
+          example: 'http://linkace.localhost/api/v1/lists?page=7'
+        last_page:
+          type: integer
+        from:
+          type: integer
+        first_page_url:
+          type: string
+          example: 'http://linkace.localhost/api/v1/lists?page=1'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/List'
+        current_page:
+          type: integer
+      description: ''
+    ListRequest:
+      title: 'Model: Link Request'
+      type: object
+      description: ''
+      x-examples:
+        Example Request for a List:
+          description: Various tools and applications for a more productiove web development.
+          is_private: false
+          name: Web Development Tools
+      properties:
+        description:
+          type: string
+        is_private:
+          type: boolean
+        name:
+          type: string
+          example: Web Development Tools
+      required:
+        - name
+    ListWithLinks:
+      title: 'Model: List with Links'
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        name:
+          type: string
+        description:
+          type:
+            - string
+            - 'null'
+        is_private:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        updated_at:
+          type: string
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        deleted_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        links:
+          $ref: '#/components/schemas/LinkPaginator'
+      x-examples:
+        Example of a List:
+          id: 3
+          user_id: 1
+          name: CSS Frameworks
+          description: null
+          is_private: false
+          created_at: '2020-01-24T13:13:02.000000Z'
+          updated_at: '2020-01-24T13:13:02.000000Z'
+          deleted_at: null
+    LinkRequest:
+      title: 'Model: List Request'
+      type: object
+      description: ''
+      x-examples:
+        Example Request for DuckDuckGo.com:
+          url: 'https://duckduckgo.com'
+          title: 'DuckDuckGo — Privacy, simplified.'
+          description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
+          lists:
+            - 5
+          tags:
+            - 9
+            - 13
+            - 29
+          is_private: false
+          check_disabled: false
+      properties:
+        url:
+          type: string
+          format: uri
+          example: 'https://duckduckgo.com'
+        title:
+          type: string
+        description:
+          type: string
+        lists:
+          type: array
+          enum:
+            - '0'
+            - '1'
+          items:
+            type: integer
+        tags:
+          type: array
+          enum:
+            - '0'
+            - '1'
+          items:
+            type: integer
+        is_private:
+          type: boolean
+        check_disabled:
+          type: boolean
+      required:
+        - url
   securitySchemes:
     api_token:
       type: http
