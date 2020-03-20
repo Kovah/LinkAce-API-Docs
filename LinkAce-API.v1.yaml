@@ -190,7 +190,7 @@ paths:
         '401':
           description: Unauthorized
       operationId: get-api-v1-lists
-      description: ''
+      description: Create a new List.
       security:
         - api_token: []
       parameters:
@@ -282,6 +282,7 @@ paths:
           in: header
           name: accept
           required: true
+      description: 'Get one specific list, including his links which are available paginated.'
     patch:
       summary: ''
       operationId: patch-api-v1-lists-list_id
@@ -316,6 +317,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ListRequest'
+      description: Update one specific list.
     delete:
       summary: ''
       operationId: delete-api-v1-lists-list_id
@@ -337,6 +339,7 @@ paths:
           in: header
           name: accept
           required: true
+      description: Delete one specific list.
 components:
   schemas:
     Link:
