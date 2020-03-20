@@ -12,7 +12,7 @@ servers:
 paths:
   /api/v1/links:
     get:
-      summary: 'Links: All Links'
+      summary: 'Links: Get all Links'
       responses:
         '200':
           description: OK
@@ -178,7 +178,7 @@ paths:
       description: Delete one specific link.
   /api/v1/lists:
     get:
-      summary: Your GET endpoint
+      summary: 'Lists: Get all Lists'
       tags: []
       responses:
         '200':
@@ -220,7 +220,7 @@ paths:
           name: order_dir
       requestBody: {}
     post:
-      summary: ''
+      summary: 'Lists: Create'
       operationId: post-api-v1-lists
       responses:
         '200':
@@ -259,7 +259,7 @@ paths:
         in: path
         required: true
     get:
-      summary: Your GET endpoint
+      summary: 'Lists: List Details'
       tags: []
       responses:
         '200':
@@ -284,7 +284,7 @@ paths:
           required: true
       description: 'Get one specific list, including his links which are available paginated.'
     patch:
-      summary: ''
+      summary: 'Lists: Update'
       operationId: patch-api-v1-lists-list_id
       responses:
         '200':
@@ -319,7 +319,7 @@ paths:
               $ref: '#/components/schemas/ListRequest'
       description: Update one specific list.
     delete:
-      summary: ''
+      summary: 'Lists: Delete'
       operationId: delete-api-v1-lists-list_id
       responses:
         '200':
@@ -583,7 +583,7 @@ components:
           type: integer
       description: ''
     ListRequest:
-      title: 'Model: Link Request'
+      title: 'Model: List Request'
       type: object
       description: ''
       x-examples:
