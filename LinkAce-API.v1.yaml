@@ -267,7 +267,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListWithLinks'
+                $ref: '#/components/schemas/List'
         '401':
           description: Unauthorized
         '404':
@@ -282,7 +282,7 @@ paths:
           in: header
           name: accept
           required: true
-      description: 'Get one specific list, including his links which are available paginated.'
+      description: Get one specific list.
     patch:
       summary: 'Lists: Update'
       operationId: patch-api-v1-lists-list_id
@@ -340,6 +340,31 @@ paths:
           name: accept
           required: true
       description: Delete one specific list.
+  '/api/v1/lists/{list_id}/links':
+    parameters:
+      - schema:
+          type: string
+        name: list_id
+        in: path
+        required: true
+    get:
+      summary: 'Lists: Links for a List'
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkPaginator'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      operationId: get-api-v1-lists-list_id-links
+      description: Get all links of one specific list.
+      security:
+        - api_token: []
 components:
   schemas:
     Link:
@@ -436,6 +461,17 @@ components:
     List:
       title: 'Model: List'
       type: object
+      x-examples:
+        Example of a List:
+          id: 3
+          user_id: 1
+          name: CSS Frameworks
+          description: null
+          is_private: false
+          created_at: '2020-01-24T13:13:02.000000Z'
+          updated_at: '2020-01-24T13:13:02.000000Z'
+          deleted_at: null
+          links: 'http://example.com/api/v1/list/3/links'
       properties:
         id:
           type: integer
@@ -463,16 +499,9 @@ components:
             - 'null'
           format: date-time
           example: '2020-03-09T19:33:23.000000Z'
-      x-examples:
-        Example of a List:
-          id: 3
-          user_id: 1
-          name: CSS Frameworks
-          description: null
-          is_private: false
-          created_at: '2020-01-24T13:13:02.000000Z'
-          updated_at: '2020-01-24T13:13:02.000000Z'
-          deleted_at: null
+        links:
+          type: string
+          description: Contains the API URL to get the actual links of a list.
     Tag:
       title: 'Model: Tag'
       type: object
@@ -601,48 +630,6 @@ components:
           example: Web Development Tools
       required:
         - name
-    ListWithLinks:
-      title: 'Model: List with Links'
-      type: object
-      properties:
-        id:
-          type: integer
-        user_id:
-          type: integer
-        name:
-          type: string
-        description:
-          type:
-            - string
-            - 'null'
-        is_private:
-          type: boolean
-        created_at:
-          type: string
-          format: date-time
-          example: '2020-03-09T19:33:23.000000Z'
-        updated_at:
-          type: string
-          format: date-time
-          example: '2020-03-09T19:33:23.000000Z'
-        deleted_at:
-          type:
-            - string
-            - 'null'
-          format: date-time
-          example: '2020-03-09T19:33:23.000000Z'
-        links:
-          $ref: '#/components/schemas/LinkPaginator'
-      x-examples:
-        Example of a List:
-          id: 3
-          user_id: 1
-          name: CSS Frameworks
-          description: null
-          is_private: false
-          created_at: '2020-01-24T13:13:02.000000Z'
-          updated_at: '2020-01-24T13:13:02.000000Z'
-          deleted_at: null
     LinkRequest:
       title: 'Model: List Request'
       type: object
