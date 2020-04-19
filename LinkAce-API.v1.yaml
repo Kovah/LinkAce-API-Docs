@@ -365,6 +365,31 @@ paths:
       description: Get all links of one specific list.
       security:
         - api_token: []
+  '/api/v1/links/{link_id}/notes':
+    parameters:
+      - schema:
+          type: string
+        name: link_id
+        in: path
+        required: true
+    get:
+      summary: 'Links: Notes for a Link'
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotePaginator'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      operationId: get-api-v1-links-link_id-notes
+      description: Get all notes of one specific link.
+      security:
+        - api_token: []
 components:
   schemas:
     Link:
@@ -676,6 +701,88 @@ components:
           type: boolean
       required:
         - url
+    NotePaginator:
+      title: 'Paginator: Notes'
+      type: object
+      properties:
+        total:
+          type: integer
+        to:
+          type: integer
+        prev_page_url:
+          type:
+            - string
+            - 'null'
+        per_page:
+          type: string
+        path:
+          type: string
+        next_page_url:
+          type:
+            - string
+            - 'null'
+        last_page_url:
+          type: string
+          example: 'http://linkace.localhost/api/v1/notes?page=7'
+        last_page:
+          type: integer
+        from:
+          type: integer
+        first_page_url:
+          type: string
+          example: 'http://linkace.localhost/api/v1/notes?page=1'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'
+        current_page:
+          type: integer
+      description: ''
+    Note:
+      title: 'Model: Note'
+      type: object
+      description: ''
+      x-examples:
+        Example Response for a Note:
+          id: 85
+          user_id: 1
+          link_id: 23
+          note: 'Interesting article, may be useful for later research about state machines in Go.'
+          is_private: false
+          created_at: '2020-03-09T19:33:23.000000Z'
+          updated_at: '2020-03-09T19:33:23.000000Z'
+          deleted_at: null
+      properties:
+        id:
+          type: integer
+          minimum: 1
+          example: 84
+        user_id:
+          type: integer
+          example: 1
+          minimum: 1
+        link_id:
+          type: integer
+          example: 1
+          minimum: 1
+        note:
+          type: string
+        is_private:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        updated_at:
+          type: string
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        deleted_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
   securitySchemes:
     api_token:
       type: http
