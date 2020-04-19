@@ -176,6 +176,31 @@ paths:
           name: accept
           required: true
       description: Delete one specific link.
+  '/api/v1/links/{link_id}/notes':
+    parameters:
+      - schema:
+          type: string
+        name: link_id
+        in: path
+        required: true
+    get:
+      summary: 'Links: Notes for a Link'
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotePaginator'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      operationId: get-api-v1-links-link_id-notes
+      description: Get all notes of one specific link.
+      security:
+        - api_token: []
   /api/v1/lists:
     get:
       summary: 'Lists: Get all Lists'
@@ -365,15 +390,9 @@ paths:
       description: Get all links of one specific list.
       security:
         - api_token: []
-  '/api/v1/links/{link_id}/notes':
-    parameters:
-      - schema:
-          type: string
-        name: link_id
-        in: path
-        required: true
+  /api/v1/tags:
     get:
-      summary: 'Links: Notes for a Link'
+      summary: 'Tags: Get all Tags'
       tags: []
       responses:
         '200':
@@ -381,15 +400,185 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NotePaginator'
+                $ref: '#/components/schemas/TagPaginator'
+        '401':
+          description: Unauthorized
+      operationId: get-api-v1-tags
+      description: Get all Tags
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+        - schema:
+            type: string
+            enum:
+              - id
+              - name
+              - is_private
+              - created_at
+              - updated_at
+          in: query
+          name: order_by
+        - schema:
+            type: string
+            enum:
+              - asc
+              - desc
+          in: query
+          name: order_dir
+      requestBody: {}
+    post:
+      summary: 'Tags: Create'
+      operationId: post-api-v1-tags
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagRequest'
+  '/api/v1/tags/{tag_id}':
+    parameters:
+      - schema:
+          type: string
+        name: list_id
+        in: path
+        required: true
+    get:
+      summary: 'Tags: Tag Details'
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
         '401':
           description: Unauthorized
         '404':
           description: Not Found
-      operationId: get-api-v1-links-link_id-notes
-      description: Get all notes of one specific link.
+      operationId: get-api-v1-tags-tag_id
       security:
         - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+      description: Get one specific tag.
+    patch:
+      summary: 'Tags: Update'
+      operationId: patch-api-v1-tags-tag_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: aplicaton/json
+          in: header
+          name: accept
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagRequest'
+      description: Update one specific Tag.
+    delete:
+      summary: 'Tag: Delete'
+      operationId: delete-api-v1-tags-tag_id
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+      description: Delete one specific tag.
+  '/api/v1/tags/{tag_id}/links':
+    parameters:
+      - schema:
+          type: string
+        name: list_id
+        in: path
+        required: true
+    get:
+      summary: 'Tags: Links for a Tag'
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkPaginator'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      operationId: get-api-v1-tags-tag_id-links
+      description: Get all links of one specific tag.
+      security:
+        - api_token: []
+
 components:
   schemas:
     Link:
@@ -562,6 +751,43 @@ components:
           created_at: '2019-02-24T20:39:25.000000Z'
           updated_at: '2019-02-24T20:39:25.000000Z'
           deleted_at: null
+    TagPaginator:
+      title: 'Paginator: Tags'
+      type: object
+      properties:
+        total:
+          type: integer
+        to:
+          type: integer
+        prev_page_url:
+          type:
+            - string
+            - 'null'
+        per_page:
+          type: string
+        path:
+          type: string
+        next_page_url:
+          type:
+            - string
+            - 'null'
+        last_page_url:
+          type: string
+          example: 'http://linkace.localhost/api/v1/tags?page=7'
+        last_page:
+          type: integer
+        from:
+          type: integer
+        first_page_url:
+          type: string
+          example: 'http://linkace.localhost/api/v1/tags?page=1'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        current_page:
+          type: integer
+      description: ''
     LinkPaginator:
       title: 'Paginator: Links'
       type: object
@@ -701,6 +927,22 @@ components:
           type: boolean
       required:
         - url
+    TagRequest:
+      title: 'Model: Tag Request'
+      type: object
+      description: ''
+      x-examples:
+        Example Request for a Tag:
+          name: artificial-intelligence
+          is_private: false
+      properties:
+        name:
+          type: string
+          example: artificial-intelligence
+        is_private:
+          type: boolean
+      required:
+        - name
     NotePaginator:
       title: 'Paginator: Notes'
       type: object
