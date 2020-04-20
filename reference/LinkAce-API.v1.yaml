@@ -7,8 +7,7 @@ info:
   contact:
     url: 'https://github.com/Kovah/LinkAce'
   description: The official documentation of the LinkAce API.
-servers:
-  - url: 'http://linkace.localhost'
+servers: []
 paths:
   /api/v1/links:
     get:
