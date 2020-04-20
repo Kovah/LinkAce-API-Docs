@@ -7,7 +7,9 @@ info:
   contact:
     url: 'https://github.com/Kovah/LinkAce'
   description: The official documentation of the LinkAce API.
-servers: []
+servers:
+  - url: 'http://your-linkace-url.com'
+    description: ''
 paths:
   /api/v1/links:
     get:
@@ -53,6 +55,8 @@ paths:
           name: order_dir
       security:
         - api_token: []
+      tags:
+        - links
     post:
       summary: 'Links: Create'
       operationId: post-api-v1-links
@@ -87,6 +91,8 @@ paths:
           name: accept
           required: true
       description: Create a new Link.
+      tags:
+        - links
   '/api/v1/links/{link_id}':
     parameters:
       - schema:
@@ -118,6 +124,8 @@ paths:
       security:
         - api_token: []
       description: 'Get one specific link, including his lists and tags.'
+      tags:
+        - links
     patch:
       summary: 'Links: Update'
       operationId: patch-api-v1-links-link_id
@@ -153,6 +161,8 @@ paths:
       security:
         - api_token: []
       description: Update one specific link.
+      tags:
+        - links
     delete:
       summary: 'Links: Delete'
       operationId: delete-api-v1-links-link_id
@@ -175,10 +185,13 @@ paths:
           name: accept
           required: true
       description: Delete one specific link.
+      tags:
+        - links
   /api/v1/lists:
     get:
       summary: 'Lists: Get all Lists'
-      tags: []
+      tags:
+        - lists
       responses:
         '200':
           description: OK
@@ -251,6 +264,8 @@ paths:
             schema:
               $ref: '#/components/schemas/ListRequest'
       description: Create a new List.
+      tags:
+        - lists
   '/api/v1/lists/{list_id}':
     parameters:
       - schema:
@@ -260,7 +275,8 @@ paths:
         required: true
     get:
       summary: 'Lists: List Details'
-      tags: []
+      tags:
+        - lists
       responses:
         '200':
           description: OK
@@ -318,6 +334,8 @@ paths:
             schema:
               $ref: '#/components/schemas/ListRequest'
       description: Update one specific list.
+      tags:
+        - lists
     delete:
       summary: 'Lists: Delete'
       operationId: delete-api-v1-lists-list_id
@@ -340,6 +358,8 @@ paths:
           name: accept
           required: true
       description: Delete one specific list.
+      tags:
+        - lists
   '/api/v1/lists/{list_id}/links':
     parameters:
       - schema:
@@ -349,7 +369,8 @@ paths:
         required: true
     get:
       summary: 'Lists: Links for a List'
-      tags: []
+      tags:
+        - lists
       responses:
         '200':
           description: OK
@@ -374,7 +395,8 @@ paths:
         required: true
     get:
       summary: 'Links: Notes for a Link'
-      tags: []
+      tags:
+        - notes
       responses:
         '200':
           description: OK
@@ -399,7 +421,8 @@ paths:
         required: true
     get:
       summary: 'Tags: Links for a Tag'
-      tags: []
+      tags:
+        - tags
       responses:
         '200':
           description: OK
@@ -424,7 +447,8 @@ paths:
         required: true
     get:
       summary: 'Tags: Tag Details'
-      tags: []
+      tags:
+        - tags
       responses:
         '200':
           description: OK
@@ -482,6 +506,8 @@ paths:
             schema:
               $ref: '#/components/schemas/TagRequest'
       description: Update one specific Tag.
+      tags:
+        - tags
     delete:
       summary: 'Tag: Delete'
       operationId: delete-api-v1-tags-tag_id
@@ -504,10 +530,13 @@ paths:
           name: accept
           required: true
       description: Delete one specific tag.
+      tags:
+        - tags
   /api/v1/tags:
     get:
       summary: 'Tags: Get all Tags'
-      tags: []
+      tags:
+        - tags
       responses:
         '200':
           description: OK
@@ -579,6 +608,8 @@ paths:
             schema:
               $ref: '#/components/schemas/TagRequest'
       description: Create a new tag.
+      tags:
+        - tags
   '/api/v1/notes/{note_id}':
     parameters:
       - schema:
@@ -621,6 +652,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/NoteRequest'
+      tags:
+        - notes
     delete:
       summary: 'Note: Delete'
       operationId: delete-api-v1-notes-note_id
@@ -643,6 +676,8 @@ paths:
           in: header
           name: accept
           required: true
+      tags:
+        - notes
   /api/v1/notes:
     post:
       summary: 'Notes: Create'
@@ -677,6 +712,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/NoteRequest'
+      tags:
+        - notes
 components:
   schemas:
     Link:
@@ -1148,3 +1185,8 @@ components:
       type: http
       scheme: bearer
       description: ''
+tags:
+  - name: links
+  - name: lists
+  - name: tags
+  - name: notes
