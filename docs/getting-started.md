@@ -1,7 +1,8 @@
-# Getting started
+# LinkAce API
 
+The LinkAce API is a clearly structured REST API to access and modify the data stored in your LinkAce setup. All data must be sent via JSON and JSON is used to return any data or messages.
 
-The LinkAce API is a clearly structured API to access and modify the data stored in your LinkAce setup. All data must be sent via JSON and JSON is used to return any data or messages.
+The source of this API documentation can be found [on Github](https://github.com/Kovah/LinkAce-API-Docs).
 
 
 ## Generating an API key
