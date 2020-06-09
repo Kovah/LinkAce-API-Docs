@@ -734,7 +734,7 @@ paths:
                   value:
                     '83': programming
                     '138': programming-books
-      operationId: get-search-tags
+      operationId: get-api-v1-search-tags
       description: Search tags to be used for Link editing.
       security:
         - api_token: []
@@ -744,6 +744,44 @@ paths:
           in: query
           name: query
           description: Query used to search for Tags
+          required: true
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+    parameters: []
+  /api/v1/search/lists:
+    get:
+      summary: Search Lists for Link Editing
+      tags:
+        - search
+        - lists
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: 'Returns found lists as ID -> Name array'
+                items: {}
+              examples:
+                'Example for Query "articles"':
+                  value:
+                    '11': Scientific Articles
+                    '23': Web Development Articles
+      operationId: get-api-v1-search-lists
+      description: Search Lists to be used for Link editing.
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: query
+          description: Query used to search for Lists
           required: true
         - schema:
             type: string
