@@ -714,6 +714,44 @@ paths:
               $ref: '#/components/schemas/NoteRequest'
       tags:
         - notes
+  /api/v1/search/tags:
+    get:
+      summary: Search Tags for Link Editing
+      tags:
+        - search
+        - tags
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: 'Returns found tags as ID -> Name array'
+                items: {}
+              examples:
+                'Example for Query "programming"':
+                  value:
+                    '83': programming
+                    '138': programming-books
+      operationId: get-search-tags
+      description: Search tags to be used for Link editing.
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: query
+          description: Query used to search for Tags
+          required: true
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+    parameters: []
 components:
   schemas:
     Link:
