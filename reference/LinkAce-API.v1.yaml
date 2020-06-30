@@ -790,6 +790,188 @@ paths:
           name: accept
           required: true
     parameters: []
+  /api/v1/trash/links:
+    get:
+      summary: 'Trash: Get Links'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Link'
+      operationId: get-api-v1-trash-links
+      tags:
+        - trash
+      description: Get all trashed links.
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+    parameters: []
+  /api/v1/trash/lists:
+    get:
+      summary: 'Trash: Get Lists'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/List'
+      operationId: get-api-v1-trash-lists
+      tags:
+        - trash
+      description: Get all trashed lists.
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+    parameters: []
+  /api/v1/trash/tags:
+    get:
+      summary: 'Trash: Get Tags'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+      operationId: get-api-v1-trash-tags
+      tags:
+        - trash
+      description: Get all trashed tags.
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+    parameters: []
+  /api/v1/trash/notes:
+    get:
+      summary: 'Trash: Get Notes'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Note'
+      operationId: get-api-v1-trash-notes
+      tags:
+        - trash
+      description: Get all trashed notes.
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+    parameters: []
+  /api/v1/trash/clear:
+    delete:
+      summary: 'Trash: Clear for Model'
+      operationId: delete-api-v1-trash-clear
+      responses:
+        '200':
+          description: 'OK, all entries deleted'
+        '500':
+          description: Internal Server Error
+      description: Delete all trashed entries for a given model.
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: ''
+              properties:
+                model:
+                  type: string
+                  description: Model type
+                  enum:
+                    - links
+                    - lists
+                    - tags
+                    - notes
+              required:
+                - model
+  /api/v1/trash/restore:
+    patch:
+      summary: 'Trash: Restore entry'
+      operationId: patch-api-v1-trash-restore
+      responses:
+        '200':
+          description: 'OK, entry restored successfully'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      description: Restore one specific entry from the trash.
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                model:
+                  type: string
+                  description: Entry type
+                  enum:
+                    - link
+                    - list
+                    - tag
+                    - note
+                id:
+                  type: integer
+                  description: Entry ID
+              required:
+                - model
+                - id
+        description: ''
 components:
   schemas:
     Link:
@@ -1266,3 +1448,4 @@ tags:
   - name: lists
   - name: tags
   - name: notes
+  - name: trash
