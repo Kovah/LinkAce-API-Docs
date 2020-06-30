@@ -930,6 +930,8 @@ paths:
                     - notes
               required:
                 - model
+      tags:
+        - trash
   /api/v1/trash/restore:
     patch:
       summary: 'Trash: Restore entry'
@@ -972,6 +974,8 @@ paths:
                 - model
                 - id
         description: ''
+      tags:
+        - trash
 components:
   schemas:
     Link:
