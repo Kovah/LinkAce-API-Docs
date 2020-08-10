@@ -80,6 +80,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/LinkRequest'
+            examples:
+              'Examples can be found in the "Model: Link Request" definition':
+                value: {}
         description: ''
       security:
         - api_token: []
@@ -151,6 +154,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/LinkRequest'
+            examples:
+              'Examples can be found in the "Model: Link Request" definition': {}
       parameters:
         - schema:
             type: string
@@ -1242,7 +1247,7 @@ components:
       required:
         - name
     LinkRequest:
-      title: 'Model: List Request'
+      title: 'Model: Link Request'
       type: object
       description: ''
       x-examples:
@@ -1258,6 +1263,14 @@ components:
             - 29
           is_private: false
           check_disabled: false
+        Example Request for DuckDuckGo.com with tags as a string:
+          url: 'https://duckduckgo.com'
+          title: 'DuckDuckGo — Privacy, simplified.'
+          description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
+          lists: 'List 1,List 2'
+          tags: 'tag1,tag2,tag3'
+          is_private: false
+          check_disabled: false
       properties:
         url:
           type: string
@@ -1268,19 +1281,23 @@ components:
         description:
           type: string
         lists:
-          type: array
-          enum:
-            - '0'
-            - '1'
+          type:
+            - array
+            - string
+          description: "Lists might be passed as comma-separated strings ('List 1,List 2'), arrays containing strings (['List 1', 'List 2']), or arrays containing List IDs ([1,2]). In the first two cases lists are created if they don't exist."
           items:
-            type: integer
+            type:
+              - integer
+              - string
         tags:
-          type: array
-          enum:
-            - '0'
-            - '1'
+          type:
+            - array
+            - string
+          description: "Tags might be passed as comma-separated strings ('tag1,tag2'), arrays containing strings (['tag1', 'tag2']), or arrays containing Tag IDs ([1,2]). In the first two cases tags are created if they don't exist."
           items:
-            type: integer
+            type:
+              - integer
+              - string
         is_private:
           type: boolean
         check_disabled:
