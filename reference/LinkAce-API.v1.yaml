@@ -155,7 +155,8 @@ paths:
             schema:
               $ref: '#/components/schemas/LinkRequest'
             examples:
-              'Examples can be found in the "Model: Link Request" definition': {}
+              Example:
+                'Examples can be found in the ''Model: Link Request'' definition': null
       parameters:
         - schema:
             type: string
@@ -732,10 +733,10 @@ paths:
             application/json:
               schema:
                 type: array
-                description: 'Returns found tags as ID -> Name array'
+                description: Returns found tags as ID -> Name array
                 items: {}
               examples:
-                'Example for Query "programming"':
+                Example for Query "programming":
                   value:
                     '83': programming
                     '138': programming-books
@@ -770,10 +771,10 @@ paths:
             application/json:
               schema:
                 type: array
-                description: 'Returns found lists as ID -> Name array'
+                description: Returns found lists as ID -> Name array
                 items: {}
               examples:
-                'Example for Query "articles"':
+                Example for Query "articles":
                   value:
                     '11': Scientific Articles
                     '23': Web Development Articles
@@ -1059,6 +1060,8 @@ components:
             - 'null'
           format: date-time
           example: '2020-03-09T19:33:23.000000Z'
+      x-tags:
+        - model
     ValidationError:
       title: 'Model: ValidationError'
       type: object
@@ -1118,6 +1121,8 @@ components:
         links:
           type: string
           description: Contains the API URL to get the actual links of a list.
+      x-tags:
+        - model
     Tag:
       title: 'Model: Tag'
       type: object
@@ -1153,6 +1158,8 @@ components:
           created_at: '2019-02-24T20:39:25.000000Z'
           updated_at: '2019-02-24T20:39:25.000000Z'
           deleted_at: null
+      x-tags:
+        - model
     LinkPaginator:
       title: 'Paginator: Links'
       type: object
@@ -1190,6 +1197,8 @@ components:
         current_page:
           type: integer
       description: ''
+      x-tags:
+        - pagination
     ListPaginator:
       title: 'Paginator: Lists'
       type: object
@@ -1227,6 +1236,8 @@ components:
         current_page:
           type: integer
       description: ''
+      x-tags:
+        - pagination
     ListRequest:
       title: 'Model: List Request'
       type: object
@@ -1246,6 +1257,8 @@ components:
           example: Web Development Tools
       required:
         - name
+      x-tags:
+        - request
     LinkRequest:
       title: 'Model: Link Request'
       type: object
@@ -1324,6 +1337,8 @@ components:
           type: boolean
       required:
         - url
+      x-tags:
+        - request
     NotePaginator:
       title: 'Paginator: Notes'
       type: object
@@ -1361,6 +1376,8 @@ components:
         current_page:
           type: integer
       description: ''
+      x-tags:
+        - pagination
     Note:
       title: 'Model: Note'
       type: object
@@ -1406,6 +1423,8 @@ components:
             - 'null'
           format: date-time
           example: '2020-03-09T19:33:23.000000Z'
+      x-tags:
+        - model
     TagRequest:
       title: 'Model: Tag Request'
       type: object
@@ -1422,6 +1441,8 @@ components:
           type: boolean
       required:
         - name
+      x-tags:
+        - request
     TagPaginator:
       title: 'Paginator: Tags'
       type: object
@@ -1459,6 +1480,8 @@ components:
         current_page:
           type: integer
       description: ''
+      x-tags:
+        - pagination
     NoteRequest:
       title: 'Model: Note Request'
       type: object
@@ -1479,6 +1502,8 @@ components:
       required:
         - link_id
         - note
+      x-tags:
+        - request
   securitySchemes:
     api_token:
       type: http
