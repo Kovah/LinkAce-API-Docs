@@ -1249,7 +1249,15 @@ components:
     LinkRequest:
       title: 'Model: Link Request'
       type: object
-      description: ''
+      description: |-
+        #### Tag and list referencing
+
+        Attention! Tags and lists might be passed in three different ways:
+        - comma-separated strings (`'List 1,List 2'`),
+        - arrays containing strings (`['List 1', 'List 2']`) or
+        - arrays containing Tag / List IDs (`[1,2]`).
+
+        In the first two cases tags / lists are created if they don't exist.
       x-examples:
         Example Request for DuckDuckGo.com:
           url: 'https://duckduckgo.com'
@@ -1263,12 +1271,24 @@ components:
             - 29
           is_private: false
           check_disabled: false
-        Example Request for DuckDuckGo.com with tags as a string:
+        Example Request with tags as a string:
           url: 'https://duckduckgo.com'
           title: 'DuckDuckGo — Privacy, simplified.'
           description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
           lists: 'List 1,List 2'
           tags: 'tag1,tag2,tag3'
+          is_private: false
+          check_disabled: false
+        Example Request with tags as strings in array:
+          url: 'https://duckduckgo.com'
+          title: 'DuckDuckGo — Privacy, simplified.'
+          description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
+          lists:
+            - List 1
+            - List 2
+          tags:
+            - tag1
+            - tag2
           is_private: false
           check_disabled: false
       properties:
@@ -1284,7 +1304,7 @@ components:
           type:
             - array
             - string
-          description: "Lists might be passed as comma-separated strings ('List 1,List 2'), arrays containing strings (['List 1', 'List 2']), or arrays containing List IDs ([1,2]). In the first two cases lists are created if they don't exist."
+          description: ''
           items:
             type:
               - integer
@@ -1293,7 +1313,7 @@ components:
           type:
             - array
             - string
-          description: "Tags might be passed as comma-separated strings ('tag1,tag2'), arrays containing strings (['tag1', 'tag2']), or arrays containing Tag IDs ([1,2]). In the first two cases tags are created if they don't exist."
+          description: ''
           items:
             type:
               - integer
