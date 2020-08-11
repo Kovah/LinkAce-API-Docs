@@ -81,8 +81,9 @@ paths:
             schema:
               $ref: '#/components/schemas/LinkRequest'
             examples:
-              'Examples can be found in the "Model: Link Request" definition':
-                value: {}
+              Example:
+                value:
+                  info: Examples can be found in the 'Models > Link Request' definition
         description: ''
       security:
         - api_token: []
@@ -157,6 +158,8 @@ paths:
             examples:
               Example:
                 'Examples can be found in the ''Model: Link Request'' definition': null
+                value:
+                  info: Examples can be found in the 'Models > Link Request' definition
       parameters:
         - schema:
             type: string
