@@ -1198,7 +1198,7 @@ components:
           type: integer
       description: ''
       x-tags:
-        - pagination
+        - model
     ListPaginator:
       title: 'Paginator: Lists'
       type: object
@@ -1237,7 +1237,7 @@ components:
           type: integer
       description: ''
       x-tags:
-        - pagination
+        - model
     ListRequest:
       title: 'Model: List Request'
       type: object
@@ -1258,7 +1258,7 @@ components:
       required:
         - name
       x-tags:
-        - request
+        - model
     LinkRequest:
       title: 'Model: Link Request'
       type: object
@@ -1338,7 +1338,7 @@ components:
       required:
         - url
       x-tags:
-        - request
+        - model
     NotePaginator:
       title: 'Paginator: Notes'
       type: object
@@ -1377,7 +1377,7 @@ components:
           type: integer
       description: ''
       x-tags:
-        - pagination
+        - model
     Note:
       title: 'Model: Note'
       type: object
@@ -1442,7 +1442,7 @@ components:
       required:
         - name
       x-tags:
-        - request
+        - model
     TagPaginator:
       title: 'Paginator: Tags'
       type: object
@@ -1481,7 +1481,7 @@ components:
           type: integer
       description: ''
       x-tags:
-        - pagination
+        - model
     NoteRequest:
       title: 'Model: Note Request'
       type: object
@@ -1503,7 +1503,7 @@ components:
         - link_id
         - note
       x-tags:
-        - request
+        - model
   securitySchemes:
     api_token:
       type: http
