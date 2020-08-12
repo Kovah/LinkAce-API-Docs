@@ -8,8 +8,8 @@ info:
     url: 'https://github.com/Kovah/LinkAce'
   description: The official documentation of the LinkAce API.
 servers:
-  - url: 'http://your-linkace-url.com'
-    description: ''
+  - url: 'https://demo.linkace.org'
+    description: Demo Server
 paths:
   /api/v1/links:
     get:
