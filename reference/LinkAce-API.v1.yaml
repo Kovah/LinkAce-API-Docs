@@ -660,7 +660,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NoteRequest'
+              $ref: '#/components/schemas/NoteUpdateRequest'
       tags:
         - notes
     delete:
@@ -720,7 +720,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NoteRequest'
+              $ref: '#/components/schemas/NoteCreateRequest'
       tags:
         - notes
   /api/v1/search/tags:
@@ -1485,8 +1485,8 @@ components:
       description: ''
       x-tags:
         - model
-    NoteRequest:
-      title: 'Model: Note Request'
+    NoteCreateRequest:
+      title: 'Model: Note Create Request'
       type: object
       description: ''
       x-examples:
@@ -1504,6 +1504,24 @@ components:
           type: boolean
       required:
         - link_id
+        - note
+      x-tags:
+        - model
+    NoteUpdateRequest:
+      title: 'Model: Note Update Request'
+      type: object
+      description: ''
+      x-examples:
+        Example Request for a Note:
+          note: 'Interesting article, may be useful for later research about state machines in Go.'
+          is_private: false
+      properties:
+        note:
+          type: string
+          example: 'Interesting article, may be useful for later research about state machines in Go.'
+        is_private:
+          type: boolean
+      required:
         - note
       x-tags:
         - model
