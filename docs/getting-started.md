@@ -26,6 +26,7 @@ It highly depends on the system you use to work with the LinkAce API. In this ex
 curl --request POST \
   --url http://your-linkace-url.com/api/v1/links \
   --header 'accept: application/json' \
+  --header 'Content-Type: application/json' \
   --header 'authorization: Bearer YOUR-API-KEY-HERE' \
   --data '{
     "url":"https://duckduckgo.com",
