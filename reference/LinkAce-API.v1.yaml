@@ -196,6 +196,135 @@ paths:
       description: Delete one specific link.
       tags:
         - links
+  /api/v1/search/links:
+    get:
+      summary: Search Links
+      tags:
+        - search
+        - links
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkPaginator'
+              examples:
+                Example for Query "programming":
+                  value:
+                    '83': programming
+                    '138': programming-books
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkPaginator'
+      operationId: get-api-v1-search-links
+      description: Search all links saved in LinkAce
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: query
+          description: Query used to search for Tags
+          required: true
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+        - schema:
+            type: boolean
+          in: query
+          name: search_title
+          description: Enables searching in the title
+        - schema:
+            type: boolean
+          in: query
+          description: Enables searching in the description
+          name: search_description
+        - schema:
+            type: boolean
+          in: query
+          name: private_only
+          description: Search for private links only
+        - schema:
+            type: boolean
+          in: query
+          name: broken_only
+          description: Search for broken links only (Status is not "Ok")
+        - schema:
+            type: boolean
+          in: query
+          name: empty_lists
+          description: Search for links without any lists attatched
+        - schema:
+            type: boolean
+          in: query
+          name: empty_tags
+          description: Search for links without any tags attatched
+        - schema:
+            type: string
+          in: query
+          name: only_lists
+          description: Comma-separated list of list IDs a link must have
+        - schema:
+            type: string
+          in: query
+          name: only_tags
+          description: Comma-separated list of tag IDs a link must have
+        - schema:
+            type: string
+            default: 'title:asc'
+            enum:
+              - 'title:asc'
+              - 'title:desc'
+              - 'url:asc'
+              - 'url:desc'
+              - 'created_at:asc'
+              - 'created_at:desc'
+          in: query
+          name: order_by
+          description: 'Order the results by the following format: "field_to_order:order_direction", e.g. "title:asc"'
+    parameters: []
+  '/api/v1/links/{link_id}/notes':
+    parameters:
+      - schema:
+          type: integer
+        name: link_id
+        in: path
+        required: true
+    get:
+      summary: 'Links: Notes for a Link'
+      tags:
+        - notes
+        - links
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotePaginator'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      operationId: get-api-v1-links-link_id-notes
+      description: Get all notes of one specific link.
+      security:
+        - api_token: []
   /api/v1/lists:
     get:
       summary: 'Lists: Get all Lists'
@@ -395,58 +524,50 @@ paths:
       description: Get all links of one specific list.
       security:
         - api_token: []
-  '/api/v1/links/{link_id}/notes':
-    parameters:
-      - schema:
-          type: integer
-        name: link_id
-        in: path
-        required: true
+  /api/v1/search/lists:
     get:
-      summary: 'Links: Notes for a Link'
+      summary: Search Lists for Link Editing
       tags:
-        - notes
+        - search
+        - lists
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NotePaginator'
+                $ref: '#/components/schemas/ListPaginator'
+              examples:
+                Example for Query "articles":
+                  value:
+                    '11': Scientific Articles
+                    '23': Web Development Articles
         '401':
           description: Unauthorized
-        '404':
-          description: Not Found
-      operationId: get-api-v1-links-link_id-notes
-      description: Get all notes of one specific link.
-      security:
-        - api_token: []
-  '/api/v1/tags/{tag_id}/links':
-    parameters:
-      - schema:
-          type: integer
-        name: tag_id
-        in: path
-        required: true
-    get:
-      summary: 'Tags: Links for a Tag'
-      tags:
-        - tags
-      responses:
-        '200':
-          description: OK
+        '422':
+          description: Unprocessable Entity
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LinkPaginator'
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-      operationId: get-api-v1-tags-tag_id-links
-      description: Get all links of one specific tag.
+                $ref: '#/components/schemas/ValidationError'
+      operationId: get-api-v1-search-lists
+      description: Search Lists to be used for Link editing.
       security:
         - api_token: []
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: query
+          description: Query used to search for Lists
+          required: true
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+    parameters: []
   '/api/v1/tags/{tag_id}':
     parameters:
       - schema:
@@ -619,6 +740,76 @@ paths:
       description: Create a new tag.
       tags:
         - tags
+  '/api/v1/tags/{tag_id}/links':
+    parameters:
+      - schema:
+          type: integer
+        name: tag_id
+        in: path
+        required: true
+    get:
+      summary: 'Tags: Links for a Tag'
+      tags:
+        - tags
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkPaginator'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      operationId: get-api-v1-tags-tag_id-links
+      description: Get all links of one specific tag.
+      security:
+        - api_token: []
+  /api/v1/search/tags:
+    get:
+      summary: Search Tags for Link Editing
+      tags:
+        - search
+        - tags
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagPaginator'
+              examples:
+                Example for Query "programming":
+                  value:
+                    '83': programming
+                    '138': programming-books
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      operationId: get-api-v1-search-tags
+      description: Search tags to be used for Link editing.
+      security:
+        - api_token: []
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: query
+          description: Query used to search for Tags
+          required: true
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: accept
+          required: true
+    parameters: []
   '/api/v1/notes/{note_id}':
     parameters:
       - schema:
@@ -723,82 +914,6 @@ paths:
               $ref: '#/components/schemas/NoteCreateRequest'
       tags:
         - notes
-  /api/v1/search/tags:
-    get:
-      summary: Search Tags for Link Editing
-      tags:
-        - search
-        - tags
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                description: Returns found tags as ID -> Name array
-                items: {}
-              examples:
-                Example for Query "programming":
-                  value:
-                    '83': programming
-                    '138': programming-books
-      operationId: get-api-v1-search-tags
-      description: Search tags to be used for Link editing.
-      security:
-        - api_token: []
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: query
-          description: Query used to search for Tags
-          required: true
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
-    parameters: []
-  /api/v1/search/lists:
-    get:
-      summary: Search Lists for Link Editing
-      tags:
-        - search
-        - lists
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                description: Returns found lists as ID -> Name array
-                items: {}
-              examples:
-                Example for Query "articles":
-                  value:
-                    '11': Scientific Articles
-                    '23': Web Development Articles
-      operationId: get-api-v1-search-lists
-      description: Search Lists to be used for Link editing.
-      security:
-        - api_token: []
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: query
-          description: Query used to search for Lists
-          required: true
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
-    parameters: []
   /api/v1/trash/links:
     get:
       summary: 'Trash: Get Links'
@@ -811,6 +926,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Link'
+        '401':
+          description: Unauthorized
       operationId: get-api-v1-trash-links
       tags:
         - trash
@@ -837,6 +954,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/List'
+        '401':
+          description: Unauthorized
       operationId: get-api-v1-trash-lists
       tags:
         - trash
@@ -863,6 +982,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Tag'
+        '401':
+          description: Unauthorized
       operationId: get-api-v1-trash-tags
       tags:
         - trash
@@ -889,6 +1010,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Note'
+        '401':
+          description: Unauthorized
       operationId: get-api-v1-trash-notes
       tags:
         - trash
@@ -910,6 +1033,8 @@ paths:
       responses:
         '200':
           description: 'OK, all entries deleted'
+        '401':
+          description: Unauthorized
         '500':
           description: Internal Server Error
       description: Delete all trashed entries for a given model.
@@ -948,6 +1073,8 @@ paths:
       responses:
         '200':
           description: 'OK, entry restored successfully'
+        '401':
+          description: Unauthorized
         '404':
           description: Not Found
         '500':
@@ -1080,6 +1207,8 @@ components:
               items:
                 type: string
               uniqueItems: false
+      x-tags:
+        - model
     List:
       title: 'Model: List'
       type: object
