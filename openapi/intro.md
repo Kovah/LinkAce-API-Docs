@@ -34,7 +34,9 @@ curl --request POST \
     "check_disabled":false
     }'
 ```
+
 After sending the request with the HTTP status `200`, you will get a response that may look like this:
+
 ```json
 {
   "id": 1
