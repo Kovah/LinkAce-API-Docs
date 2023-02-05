@@ -7,7 +7,8 @@ info:
     url: 'https://opensource.org/licenses/gpl-3.0.html'
   contact:
     url: 'https://github.com/Kovah/LinkAce'
-  description: The official documentation of the LinkAce API.
+  description:
+    $ref: ./intro.md
 servers:
   - url: 'https://demo.linkace.org'
     description: Demo Server
