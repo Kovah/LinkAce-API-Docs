@@ -3,7 +3,8 @@ info:
   title: LinkAce API
   version: '1.0'
   license:
-    name: MIT
+    name: GPL-3.0-or-later
+    url: 'https://opensource.org/licenses/gpl-3.0.html'
   contact:
     url: 'https://github.com/Kovah/LinkAce'
   description: The official documentation of the LinkAce API.
@@ -12,6 +13,8 @@ servers:
     description: Demo Server
 paths:
   /api/v1/links:
+    parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
     get:
       summary: 'Links: Get all Links'
       responses:
@@ -26,12 +29,7 @@ paths:
       operationId: get-api-v1-links
       description: Get all links.
       parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
+        - $ref: '#/components/parameters/PaginatorAmount'
         - schema:
             type: string
             enum:
@@ -46,13 +44,8 @@ paths:
               - updated_at
           in: query
           name: order_by
-        - schema:
-            type: string
-            enum:
-              - asc
-              - desc
-          in: query
-          name: order_dir
+          description: Order elements by the specified field
+        - $ref: '#/components/parameters/OrderDirection'
       security:
         - api_token: []
       tags:
@@ -81,24 +74,21 @@ paths:
             schema:
               $ref: '#/components/schemas/LinkRequest'
             examples:
-              Example:
-                value:
-                  info: Examples can be found in the 'Models > Link Request' definition
+              Example Request for DuckDuckGo.com:
+                $ref: '#/components/examples/LinkRequest'
+              Example Request with tags as a string:
+                $ref: '#/components/examples/LinkRequestWithStringTags'
+              Example Request with tags as strings in array:
+                $ref: '#/components/examples/LinkRequestWithArrayTags'
         description: ''
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
       description: Create a new Link.
       tags:
         - links
   '/api/v1/links/{link_id}':
     parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
       - schema:
           type: integer
         name: link_id
@@ -118,13 +108,6 @@ paths:
           description: Unauthorized
         '404':
           description: Not Found
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
       security:
         - api_token: []
       description: 'Get one specific link, including his lists and tags.'
@@ -156,17 +139,12 @@ paths:
             schema:
               $ref: '#/components/schemas/LinkRequest'
             examples:
-              Example:
-                'Examples can be found in the ''Model: Link Request'' definition': null
-                value:
-                  info: Examples can be found in the 'Models > Link Request' definition
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
+              Example Request for DuckDuckGo.com:
+                $ref: '#/components/examples/LinkRequest'
+              Example Request with tags as a string:
+                $ref: '#/components/examples/LinkRequestWithStringTags'
+              Example Request with tags as strings in array:
+                $ref: '#/components/examples/LinkRequestWithArrayTags'
       security:
         - api_token: []
       description: Update one specific link.
@@ -186,17 +164,12 @@ paths:
           description: Internal Server Error
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
       description: Delete one specific link.
       tags:
         - links
   /api/v1/search/links:
+    parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
     get:
       summary: Search Links
       tags:
@@ -209,11 +182,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LinkPaginator'
-              examples:
-                Example for Query "programming":
-                  value:
-                    '83': programming
-                    '138': programming-books
         '401':
           description: Unauthorized
         '422':
@@ -222,27 +190,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-        '':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LinkPaginator'
       operationId: get-api-v1-search-links
       description: Search all links saved in LinkAce
       security:
         - api_token: []
       parameters:
+        - $ref: '#/components/parameters/PaginatorAmount'
         - schema:
             type: string
           in: query
           name: query
           description: Query used to search for Tags
-          required: true
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
           required: true
         - schema:
             type: boolean
@@ -297,12 +255,13 @@ paths:
           in: query
           name: order_by
           description: 'Order the results by the following format: "field_to_order:order_direction", e.g. "title:asc"'
-    parameters: []
   '/api/v1/links/{link_id}/notes':
     parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
       - schema:
           type: integer
         name: link_id
+        description: ID of the link you want to get notes for
         in: path
         required: true
     get:
@@ -325,7 +284,11 @@ paths:
       description: Get all notes of one specific link.
       security:
         - api_token: []
+      parameters:
+        - $ref: '#/components/parameters/PaginatorAmount'
   /api/v1/lists:
+    parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
     get:
       summary: 'Lists: Get all Lists'
       tags:
@@ -344,12 +307,7 @@ paths:
       security:
         - api_token: []
       parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
+        - $ref: '#/components/parameters/PaginatorAmount'
         - schema:
             type: string
             enum:
@@ -361,14 +319,8 @@ paths:
               - updated_at
           in: query
           name: order_by
-        - schema:
-            type: string
-            enum:
-              - asc
-              - desc
-          in: query
-          name: order_dir
-      requestBody: {}
+          description: Order elements by the specified field
+        - $ref: '#/components/parameters/OrderDirection'
     post:
       summary: 'Lists: Create'
       operationId: post-api-v1-lists
@@ -389,23 +341,20 @@ paths:
                 $ref: '#/components/schemas/ValidationError'
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ListRequest'
+            examples:
+              Simple List Request:
+                $ref: '#/components/examples/ListRequest'
       description: Create a new List.
       tags:
         - lists
   '/api/v1/lists/{list_id}':
     parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
       - schema:
           type: integer
         name: list_id
@@ -429,13 +378,6 @@ paths:
       operationId: get-api-v1-lists-list_id
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
       description: Get one specific list.
     patch:
       summary: 'Lists: Update'
@@ -459,18 +401,14 @@ paths:
                 $ref: '#/components/schemas/ValidationError'
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: aplicaton/json
-          in: header
-          name: accept
-          required: true
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ListRequest'
+            examples:
+              Simple List Request:
+                $ref: '#/components/examples/ListRequest'
       description: Update one specific list.
       tags:
         - lists
@@ -488,18 +426,12 @@ paths:
           description: Internal Server Error
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
       description: Delete one specific list.
       tags:
         - lists
   '/api/v1/lists/{list_id}/links':
     parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
       - schema:
           type: integer
         name: list_id
@@ -524,7 +456,11 @@ paths:
       description: Get all links of one specific list.
       security:
         - api_token: []
+      parameters:
+        - $ref: '#/components/parameters/PaginatorAmount'
   /api/v1/search/lists:
+    parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
     get:
       summary: Search Lists for Link Editing
       tags:
@@ -555,21 +491,81 @@ paths:
       security:
         - api_token: []
       parameters:
+        - $ref: '#/components/parameters/PaginatorAmount'
         - schema:
             type: string
           in: query
           name: query
           description: Query used to search for Lists
           required: true
+  /api/v1/tags:
+    parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
+    get:
+      summary: 'Tags: Get all Tags'
+      tags:
+        - tags
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagPaginator'
+        '401':
+          description: Unauthorized
+      operationId: get-api-v1-tags
+      description: Get all tags.
+      security:
+        - api_token: []
+      parameters:
+        - $ref: '#/components/parameters/PaginatorAmount'
         - schema:
             type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
-    parameters: []
+            enum:
+              - id
+              - name
+              - is_private
+              - created_at
+              - updated_at
+          in: query
+          name: order_by
+          description: Order elements by the specified field
+        - $ref: '#/components/parameters/OrderDirection'
+    post:
+      summary: 'Tags: Create'
+      operationId: post-api-v1-tags
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      security:
+        - api_token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagRequest'
+            examples:
+              Simple Tag Request:
+                $ref: '#/components/examples/TagRequest'
+      description: Create a new tag.
+      tags:
+        - tags
   '/api/v1/tags/{tag_id}':
     parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
       - schema:
           type: integer
         name: tag_id
@@ -593,13 +589,6 @@ paths:
       operationId: get-api-v1-tags-tag_id
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
       description: Get one specific tag.
     patch:
       summary: 'Tags: Update'
@@ -623,18 +612,14 @@ paths:
                 $ref: '#/components/schemas/ValidationError'
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: aplicaton/json
-          in: header
-          name: accept
-          required: true
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/TagRequest'
+            examples:
+              Simple Tag Request:
+                $ref: '#/components/examples/TagRequest'
       description: Update one specific Tag.
       tags:
         - tags
@@ -652,96 +637,12 @@ paths:
           description: Internal Server Error
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
       description: Delete one specific tag.
-      tags:
-        - tags
-  /api/v1/tags:
-    get:
-      summary: 'Tags: Get all Tags'
-      tags:
-        - tags
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TagPaginator'
-        '401':
-          description: Unauthorized
-      operationId: get-api-v1-tags
-      description: Get all tags.
-      security:
-        - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
-        - schema:
-            type: string
-            enum:
-              - id
-              - name
-              - is_private
-              - created_at
-              - updated_at
-          in: query
-          name: order_by
-        - schema:
-            type: string
-            enum:
-              - asc
-              - desc
-          in: query
-          name: order_dir
-      requestBody: {}
-    post:
-      summary: 'Tags: Create'
-      operationId: post-api-v1-tags
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Tag'
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-      security:
-        - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TagRequest'
-      description: Create a new tag.
       tags:
         - tags
   '/api/v1/tags/{tag_id}/links':
     parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
       - schema:
           type: integer
         name: tag_id
@@ -766,7 +667,11 @@ paths:
       description: Get all links of one specific tag.
       security:
         - api_token: []
+      parameters:
+        - $ref: '#/components/parameters/PaginatorAmount'
   /api/v1/search/tags:
+    parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
     get:
       summary: Search Tags for Link Editing
       tags:
@@ -797,21 +702,50 @@ paths:
       security:
         - api_token: []
       parameters:
+        - $ref: '#/components/parameters/PaginatorAmount'
         - schema:
             type: string
           in: query
           name: query
           description: Query used to search for Tags
           required: true
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
-    parameters: []
+  /api/v1/notes:
+    parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
+    post:
+      summary: 'Notes: Create'
+      operationId: post-api-v1-notes
+      description: Create a new Note.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      security:
+        - api_token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteCreateRequest'
+            examples:
+              Note Creation Request:
+                $ref: '#/components/examples/NoteCreateRequest'
+      tags:
+        - notes
   '/api/v1/notes/{note_id}':
     parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
       - schema:
           type: integer
         name: note_id
@@ -840,18 +774,14 @@ paths:
                 $ref: '#/components/schemas/ValidationError'
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: aplicaton/json
-          in: header
-          name: accept
-          required: true
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/NoteUpdateRequest'
+            examples:
+              Note Update Request:
+                $ref: '#/components/examples/NoteUpdateRequest'
       tags:
         - notes
     delete:
@@ -869,52 +799,11 @@ paths:
           description: Internal Server Error
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
-      tags:
-        - notes
-  /api/v1/notes:
-    post:
-      summary: 'Notes: Create'
-      operationId: post-api-v1-notes
-      description: Create a new Note.
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Note'
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-      security:
-        - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NoteCreateRequest'
       tags:
         - notes
   /api/v1/trash/links:
+    parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
     get:
       summary: 'Trash: Get Links'
       responses:
@@ -934,15 +823,9 @@ paths:
       description: Get all trashed links.
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
-    parameters: []
   /api/v1/trash/lists:
+    parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
     get:
       summary: 'Trash: Get Lists'
       responses:
@@ -962,15 +845,9 @@ paths:
       description: Get all trashed lists.
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
-    parameters: []
   /api/v1/trash/tags:
+    parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
     get:
       summary: 'Trash: Get Tags'
       responses:
@@ -990,15 +867,9 @@ paths:
       description: Get all trashed tags.
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
-    parameters: []
   /api/v1/trash/notes:
+    parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
     get:
       summary: 'Trash: Get Notes'
       responses:
@@ -1018,15 +889,9 @@ paths:
       description: Get all trashed notes.
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
-    parameters: []
   /api/v1/trash/clear:
+    parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
     delete:
       summary: 'Trash: Clear for Model'
       operationId: delete-api-v1-trash-clear
@@ -1040,13 +905,6 @@ paths:
       description: Delete all trashed entries for a given model.
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
       requestBody:
         content:
           application/json:
@@ -1067,6 +925,8 @@ paths:
       tags:
         - trash
   /api/v1/trash/restore:
+    parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
     patch:
       summary: 'Trash: Restore entry'
       operationId: patch-api-v1-trash-restore
@@ -1082,13 +942,6 @@ paths:
       description: Restore one specific entry from the trash.
       security:
         - api_token: []
-      parameters:
-        - schema:
-            type: string
-            default: application/json
-          in: header
-          name: accept
-          required: true
       requestBody:
         content:
           application/json:
@@ -1117,7 +970,6 @@ components:
     Link:
       title: 'Model: Link'
       type: object
-      description: ''
       x-examples:
         Example Response for DuckDuckGo.com:
           id: 85
@@ -1150,13 +1002,11 @@ components:
         title:
           type: string
         description:
-          type:
-            - string
-            - 'null'
+          type: string
+          nullable: true
         icon:
-          type:
-            - string
-            - 'null'
+          type: string
+          nullable: true
           pattern: fa fa-link
         is_private:
           type: boolean
@@ -1185,111 +1035,10 @@ components:
           format: date-time
           example: '2020-03-09T19:33:23.000000Z'
         deleted_at:
-          type:
-            - string
-            - 'null'
+          type: string
+          nullable: true
           format: date-time
           example: '2020-03-09T19:33:23.000000Z'
-      x-tags:
-        - model
-    ValidationError:
-      title: 'Model: ValidationError'
-      type: object
-      properties:
-        message:
-          type: string
-          example: The given data was invalid.
-        errors:
-          type: object
-          properties:
-            form_key:
-              type: array
-              items:
-                type: string
-              uniqueItems: false
-      x-tags:
-        - model
-    List:
-      title: 'Model: List'
-      type: object
-      x-examples:
-        Example of a List:
-          id: 3
-          user_id: 1
-          name: CSS Frameworks
-          description: null
-          is_private: false
-          created_at: '2020-01-24T13:13:02.000000Z'
-          updated_at: '2020-01-24T13:13:02.000000Z'
-          deleted_at: null
-          links: 'http://example.com/api/v1/list/3/links'
-      properties:
-        id:
-          type: integer
-        user_id:
-          type: integer
-        name:
-          type: string
-        description:
-          type:
-            - string
-            - 'null'
-        is_private:
-          type: boolean
-        created_at:
-          type: string
-          format: date-time
-          example: '2020-03-09T19:33:23.000000Z'
-        updated_at:
-          type: string
-          format: date-time
-          example: '2020-03-09T19:33:23.000000Z'
-        deleted_at:
-          type:
-            - string
-            - 'null'
-          format: date-time
-          example: '2020-03-09T19:33:23.000000Z'
-        links:
-          type: string
-          description: Contains the API URL to get the actual links of a list.
-      x-tags:
-        - model
-    Tag:
-      title: 'Model: Tag'
-      type: object
-      properties:
-        id:
-          type: integer
-        user_id:
-          type: integer
-        name:
-          type: string
-        is_private:
-          type: boolean
-        created_at:
-          type: string
-          format: date-time
-          example: '2020-03-09T19:33:23.000000Z'
-        updated_at:
-          type: string
-          format: date-time
-          example: '2020-03-09T19:33:23.000000Z'
-        deleted_at:
-          type:
-            - string
-            - 'null'
-          format: date-time
-          example: '2020-03-09T19:33:23.000000Z'
-      x-examples:
-        Example of a Tag:
-          id: 118
-          user_id: 1
-          name: alternative
-          is_private: false
-          created_at: '2019-02-24T20:39:25.000000Z'
-          updated_at: '2019-02-24T20:39:25.000000Z'
-          deleted_at: null
       x-tags:
         - model
     LinkPaginator:
@@ -1301,17 +1050,15 @@ components:
         to:
           type: integer
         prev_page_url:
-          type:
-            - string
-            - 'null'
+          type: string
+          nullable: true
         per_page:
           type: string
         path:
           type: string
         next_page_url:
-          type:
-            - string
-            - 'null'
+          type: string
+          nullable: true
         last_page_url:
           type: string
           example: 'http://linkace.localhost/api/v1/links?page=7'
@@ -1328,7 +1075,97 @@ components:
             $ref: '#/components/schemas/Link'
         current_page:
           type: integer
-      description: ''
+      x-tags:
+        - model
+    LinkRequest:
+      title: 'Model: Link Request'
+      type: object
+      description: |-
+        #### Tag and list referencing
+
+        Attention! Tags and lists might be passed in three different ways:
+        - comma-separated strings (`'List 1,List 2'`),
+        - arrays containing strings (`['List 1', 'List 2']`) or
+        - arrays containing Tag / List IDs (`[1,2]`).
+
+        In the first two cases tags / lists are created if they don't exist.
+      properties:
+        url:
+          type: string
+          format: uri
+          example: 'https://duckduckgo.com'
+        title:
+          type: string
+        description:
+          type: string
+        lists:
+          description: 'Must be either an array of List IDs or List names, or a string with comma-separated List names'
+          oneOf:
+            - type: string
+            - type: array
+          items:
+            oneOf:
+              - type: string
+              - type: integer
+        tags:
+          description: 'Must be either an array of List IDs or List names, or a string with comma-separated List names'
+          oneOf:
+            - type: string
+            - type: array
+          items:
+            oneOf:
+              - type: string
+              - type: integer
+        is_private:
+          type: boolean
+        check_disabled:
+          type: boolean
+      required:
+        - url
+      x-tags:
+        - model
+    List:
+      title: 'Model: List'
+      type: object
+      x-examples:
+        Example of a List:
+          id: 3
+          user_id: 1
+          name: CSS Frameworks
+          description: null
+          is_private: false
+          created_at: '2020-01-24T13:13:02.000000Z'
+          updated_at: '2020-01-24T13:13:02.000000Z'
+          deleted_at: null
+          links: 'https://example.com/api/v1/list/3/links'
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        is_private:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        updated_at:
+          type: string
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        deleted_at:
+          type: string
+          nullable: true
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        links:
+          type: string
+          description: Contains the API URL to get the actual links of a list.
       x-tags:
         - model
     ListPaginator:
@@ -1340,17 +1177,15 @@ components:
         to:
           type: integer
         prev_page_url:
-          type:
-            - string
-            - 'null'
+          type: string
+          nullable: true
         per_page:
           type: string
         path:
           type: string
         next_page_url:
-          type:
-            - string
-            - 'null'
+          type: string
+          nullable: true
         last_page_url:
           type: string
           example: 'http://linkace.localhost/api/v1/lists?page=7'
@@ -1367,18 +1202,11 @@ components:
             $ref: '#/components/schemas/List'
         current_page:
           type: integer
-      description: ''
       x-tags:
         - model
     ListRequest:
       title: 'Model: List Request'
       type: object
-      description: ''
-      x-examples:
-        Example Request for a List:
-          description: Various tools and applications for a more productiove web development.
-          is_private: false
-          name: Web Development Tools
       properties:
         description:
           type: string
@@ -1391,129 +1219,9 @@ components:
         - name
       x-tags:
         - model
-    LinkRequest:
-      title: 'Model: Link Request'
-      type: object
-      description: |-
-        #### Tag and list referencing
-
-        Attention! Tags and lists might be passed in three different ways:
-        - comma-separated strings (`'List 1,List 2'`),
-        - arrays containing strings (`['List 1', 'List 2']`) or
-        - arrays containing Tag / List IDs (`[1,2]`).
-
-        In the first two cases tags / lists are created if they don't exist.
-      x-examples:
-        Example Request for DuckDuckGo.com:
-          url: 'https://duckduckgo.com'
-          title: 'DuckDuckGo — Privacy, simplified.'
-          description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
-          lists:
-            - 5
-          tags:
-            - 9
-            - 13
-            - 29
-          is_private: false
-          check_disabled: false
-        Example Request with tags as a string:
-          url: 'https://duckduckgo.com'
-          title: 'DuckDuckGo — Privacy, simplified.'
-          description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
-          lists: 'List 1,List 2'
-          tags: 'tag1,tag2,tag3'
-          is_private: false
-          check_disabled: false
-        Example Request with tags as strings in array:
-          url: 'https://duckduckgo.com'
-          title: 'DuckDuckGo — Privacy, simplified.'
-          description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
-          lists:
-            - List 1
-            - List 2
-          tags:
-            - tag1
-            - tag2
-          is_private: false
-          check_disabled: false
-      properties:
-        url:
-          type: string
-          format: uri
-          example: 'https://duckduckgo.com'
-        title:
-          type: string
-        description:
-          type: string
-        lists:
-          type:
-            - array
-            - string
-          description: ''
-          items:
-            type:
-              - integer
-              - string
-        tags:
-          type:
-            - array
-            - string
-          description: ''
-          items:
-            type:
-              - integer
-              - string
-        is_private:
-          type: boolean
-        check_disabled:
-          type: boolean
-      required:
-        - url
-      x-tags:
-        - model
-    NotePaginator:
-      title: 'Paginator: Notes'
-      type: object
-      properties:
-        total:
-          type: integer
-        to:
-          type: integer
-        prev_page_url:
-          type:
-            - string
-            - 'null'
-        per_page:
-          type: string
-        path:
-          type: string
-        next_page_url:
-          type:
-            - string
-            - 'null'
-        last_page_url:
-          type: string
-          example: 'http://linkace.localhost/api/v1/notes?page=7'
-        last_page:
-          type: integer
-        from:
-          type: integer
-        first_page_url:
-          type: string
-          example: 'http://linkace.localhost/api/v1/notes?page=1'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Note'
-        current_page:
-          type: integer
-      description: ''
-      x-tags:
-        - model
     Note:
       title: 'Model: Note'
       type: object
-      description: ''
       x-examples:
         Example Response for a Note:
           id: 85
@@ -1550,33 +1258,14 @@ components:
           format: date-time
           example: '2020-03-09T19:33:23.000000Z'
         deleted_at:
-          type:
-            - string
-            - 'null'
+          type: string
+          nullable: true
           format: date-time
           example: '2020-03-09T19:33:23.000000Z'
       x-tags:
         - model
-    TagRequest:
-      title: 'Model: Tag Request'
-      type: object
-      description: ''
-      x-examples:
-        Example Request for a Tag:
-          name: artificial-intelligence
-          is_private: false
-      properties:
-        name:
-          type: string
-          example: artificial-intelligence
-        is_private:
-          type: boolean
-      required:
-        - name
-      x-tags:
-        - model
-    TagPaginator:
-      title: 'Paginator: Tags'
+    NotePaginator:
+      title: 'Paginator: Notes'
       type: object
       properties:
         total:
@@ -1584,45 +1273,36 @@ components:
         to:
           type: integer
         prev_page_url:
-          type:
-            - string
-            - 'null'
+          type: string
+          nullable: true
         per_page:
           type: string
         path:
           type: string
         next_page_url:
-          type:
-            - string
-            - 'null'
+          type: string
+          nullable: true
         last_page_url:
           type: string
-          example: 'http://linkace.localhost/api/v1/tags?page=7'
+          example: 'http://linkace.localhost/api/v1/notes?page=7'
         last_page:
           type: integer
         from:
           type: integer
         first_page_url:
           type: string
-          example: 'http://linkace.localhost/api/v1/tags?page=1'
+          example: 'http://linkace.localhost/api/v1/notes?page=1'
         data:
           type: array
           items:
-            $ref: '#/components/schemas/Tag'
+            $ref: '#/components/schemas/Note'
         current_page:
           type: integer
-      description: ''
       x-tags:
         - model
     NoteCreateRequest:
       title: 'Model: Note Create Request'
       type: object
-      description: ''
-      x-examples:
-        Example Request for a Note:
-          link_id: 23
-          note: 'Interesting article, may be useful for later research about state machines in Go.'
-          is_private: false
       properties:
         link_id:
           type: integer
@@ -1639,11 +1319,6 @@ components:
     NoteUpdateRequest:
       title: 'Model: Note Update Request'
       type: object
-      description: ''
-      x-examples:
-        Example Request for a Note:
-          note: 'Interesting article, may be useful for later research about state machines in Go.'
-          is_private: false
       properties:
         note:
           type: string
@@ -1654,14 +1329,202 @@ components:
         - note
       x-tags:
         - model
+    Tag:
+      title: 'Model: Tag'
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        name:
+          type: string
+        is_private:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        updated_at:
+          type: string
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        deleted_at:
+          type: string
+          nullable: true
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+      x-examples:
+        Example of a Tag:
+          id: 118
+          user_id: 1
+          name: alternative
+          is_private: false
+          created_at: '2019-02-24T20:39:25.000000Z'
+          updated_at: '2019-02-24T20:39:25.000000Z'
+          deleted_at: null
+      x-tags:
+        - model
+    TagPaginator:
+      title: 'Paginator: Tags'
+      type: object
+      properties:
+        total:
+          type: integer
+        to:
+          type: integer
+        prev_page_url:
+          type: string
+          nullable: true
+        per_page:
+          type: string
+        path:
+          type: string
+        next_page_url:
+          type: string
+          nullable: true
+        last_page_url:
+          type: string
+          example: 'http://linkace.localhost/api/v1/tags?page=7'
+        last_page:
+          type: integer
+        from:
+          type: integer
+        first_page_url:
+          type: string
+          example: 'http://linkace.localhost/api/v1/tags?page=1'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        current_page:
+          type: integer
+      x-tags:
+        - model
+    TagRequest:
+      title: 'Model: Tag Request'
+      type: object
+      properties:
+        name:
+          type: string
+          example: artificial-intelligence
+        is_private:
+          type: boolean
+      required:
+        - name
+      x-tags:
+        - model
+    ValidationError:
+      title: 'Model: ValidationError'
+      type: object
+      properties:
+        message:
+          type: string
+          example: The given data was invalid.
+        errors:
+          type: object
+          properties:
+            form_key:
+              type: array
+              items:
+                type: string
+              uniqueItems: false
+      x-tags:
+        - model
   securitySchemes:
     api_token:
       type: http
       scheme: bearer
-      description: ''
+      description: API token received from the user settings
+  parameters:
+    DefaultAccept:
+      name: accept
+      description: Default header needed for every request
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+    OrderDirection:
+      name: order_dir
+      description: Order elements in ascending or descending order
+      in: query
+      schema:
+        type: string
+        enum:
+          - asc
+          - desc
+    PaginatorAmount:
+      name: per_page
+      description: Amount of entries to return per page. Use -1 to return all items.
+      in: query
+      schema:
+        type: integer
+        minimum: -1
+      x-examples:
+        100 entries per page:
+          per_page: 100
+        all entries on first page:
+          per_page: -1
+  requestBodies: {}
+  examples:
+    LinkRequest:
+      value:
+        url: 'https://duckduckgo.com'
+        title: 'DuckDuckGo — Privacy, simplified.'
+        description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
+        lists:
+          - 5
+        tags:
+          - 9
+          - 13
+          - 29
+        is_private: false
+        check_disabled: false
+    LinkRequestWithStringTags:
+      value:
+        url: 'https://duckduckgo.com'
+        title: 'DuckDuckGo — Privacy, simplified.'
+        description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
+        lists: 'List 1,List 2'
+        tags: 'tag1,tag2,tag3'
+        is_private: false
+        check_disabled: false
+    LinkRequestWithArrayTags:
+      value:
+        url: 'https://duckduckgo.com'
+        title: 'DuckDuckGo — Privacy, simplified.'
+        description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
+        lists:
+          - List 1
+          - List 2
+        tags:
+          - tag1
+          - tag2
+        is_private: false
+        check_disabled: false
+    ListRequest:
+      value:
+        name: Web Development Tools
+        description: Various tools and applications for a more productiove web development.
+        is_private: false
+    TagRequest:
+      value:
+        name: programming
+        is_private: false
+    NoteCreateRequest:
+      value:
+        link_id: 23
+        note: 'Interesting article, may be useful for later research about state machines in Go.'
+        is_private: false
+    NoteUpdateRequest:
+      value:
+        note: 'Interesting article, may be useful for later research about state machines in Go.'
+        is_private: false
 tags:
   - name: links
   - name: lists
   - name: tags
   - name: notes
   - name: trash
+  - name: search

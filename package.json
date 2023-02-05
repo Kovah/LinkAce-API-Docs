@@ -1,0 +1,22 @@
+{
+  "name": "linkace-api-docs",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kovah/LinkAce-API-Docs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/Kovah/LinkAce-API-Docs#readme",
+  "scripts": {
+    "start": "redocly preview-docs",
+    "build": "redoc-cli build openapi/LinkAce-API.v1.yaml -t docs/layout.html -o docs/index.html",
+    "test": "redocly lint"
+  },
+  "devDependencies": {
+    "@redocly/cli": "^1.0.0-beta.122",
+    "redoc-cli": "^0.13.20"
+  }
+}
