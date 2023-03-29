@@ -1042,6 +1042,72 @@ components:
           example: '2020-03-09T19:33:23.000000Z'
       x-tags:
         - model
+    LinkWithoutRelations:
+      title: 'Model: Link'
+      type: object
+      x-examples:
+        Example Response for DuckDuckGo.com:
+          id: 85
+          user_id: 1
+          url: 'https://duckduckgo.com'
+          title: 'DuckDuckGo — Privacy, simplified.'
+          description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
+          icon: fa fa-link
+          is_private: false
+          status: 1
+          check_disabled: false
+          lists: [ ]
+          tags: [ ]
+          created_at: '2020-03-09T19:33:23.000000Z'
+          updated_at: '2020-03-09T19:33:23.000000Z'
+          deleted_at: null
+      properties:
+        id:
+          type: integer
+          minimum: 1
+          example: 84
+        user_id:
+          type: integer
+          example: 1
+          minimum: 1
+        url:
+          type: string
+          format: uri
+          example: 'https://duckduckgo.com'
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        icon:
+          type: string
+          nullable: true
+          pattern: fa fa-link
+        is_private:
+          type: boolean
+        status:
+          type: integer
+          enum:
+            - 1
+            - 2
+            - 3
+        check_disabled:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        updated_at:
+          type: string
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+        deleted_at:
+          type: string
+          nullable: true
+          format: date-time
+          example: '2020-03-09T19:33:23.000000Z'
+      x-tags:
+        - model
     LinkPaginator:
       title: 'Paginator: Links'
       type: object
@@ -1073,7 +1139,7 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/Link'
+            $ref: '#/components/schemas/LinkWithoutRelations'
         current_page:
           type: integer
       x-tags:
