@@ -9,7 +9,6 @@ const perform = async (z, bundle) => {
     },
     params: {
       query: bundle.inputData.query,
-      per_page: bundle.inputData.per_page,
       order_by: bundle.inputData.order_by,
       search_title: bundle.inputData.search_title,
       search_description: bundle.inputData.search_description,
@@ -22,7 +21,11 @@ const perform = async (z, bundle) => {
 
   return z.request(options).then((response) => {
     response.throwForStatus();
-    return response.json.data;
+    const results = response.json.data;
+    if (results && results.length > 0) {
+      return [results[0]];
+    }
+    return [];
   });
 };
 
@@ -42,15 +45,6 @@ module.exports = {
         label: 'Query',
         helpText: 'The actual query to search for.',
         required: true,
-        list: false,
-        altersDynamicFields: false
-      },
-      {
-        key: 'per_page',
-        type: 'number',
-        label: 'Links per page',
-        helpText: 'Amount of entries to return per page. Use -1 to return all items.',
-        required: false,
         list: false,
         altersDynamicFields: false
       },
