@@ -12,11 +12,10 @@
   "homepage": "https://github.com/Kovah/LinkAce-API-Docs#readme",
   "scripts": {
     "start": "redocly preview-docs",
-    "build": "redoc-cli build-docs openapi/LinkAce-API.v1.yaml -t docs/layout.html -o docs/index.html && redoc-cli build-docs openapi/LinkAce-API.v2.yaml -t docs/layout.html -o docs/v2.html",
+    "build": "npx @redocly/cli build-docs openapi/LinkAce-API.v1.yaml -o docs/index.html; npx @redocly/cli build-docs openapi/LinkAce-API.v2.yaml -o docs/v2.html",
     "test": "redocly lint"
   },
   "devDependencies": {
-    "@redocly/cli": "^1.18.0",
-    "redoc-cli": "^0.13.21"
+    "@redocly/cli": "^1.14.0"
   }
 }
