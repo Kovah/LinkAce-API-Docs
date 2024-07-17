@@ -1,7 +1,9 @@
 # See https://redocly.com/docs/cli/configuration/ for more information.
 apis:
-  sample@v1:
+  linkace@v1:
     root: openapi/LinkAce-API.v1.yaml
+  linkace@v2:
+    root: openapi/LinkAce-API.v2.yaml
 extends:
   - recommended
 rules:
