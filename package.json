@@ -16,6 +16,6 @@
     "test": "redocly lint"
   },
   "devDependencies": {
-    "@redocly/cli": "^1.14.0"
+    "@redocly/cli": "^1.21.0"
   }
 }
