@@ -675,6 +675,9 @@ paths:
       - $ref: '#/components/parameters/DefaultAccept'
     post:
       summary: 'Bulk Store: Links'
+      description: Bulk store links
+      tags:
+        - bulk
       operationId: post-api-v2-bulk-links
       responses:
         '200':
@@ -709,6 +712,9 @@ paths:
                 $ref: '#/components/examples/LinkArrayRequest'
     patch:
       summary: 'Bulk Edit: Links'
+      description: Bulk editing links
+      tags:
+        - bulk
       operationId: patch-api-v2-bulk-links
       responses:
         '200':
@@ -762,14 +768,14 @@ paths:
             examples:
               Simple Bulk Edit Request:
                 $ref: '#/components/examples/LinkBulkEditRequest'
-      description: Bulk editing links
-      tags:
-        - bulk
   /api/v2/bulk/lists:
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
     post:
       summary: 'Bulk Store: Lists'
+      description: Bulk store lists
+      tags:
+        - bulk
       operationId: post-api-v2-bulk-lists
       responses:
         '200':
@@ -804,6 +810,9 @@ paths:
                 $ref: '#/components/examples/ListArrayRequest'
     patch:
       summary: 'Bulk Edit: Lists'
+      description: Bulk editing lists
+      tags:
+        - bulk
       operationId: patch-api-v2-bulk-lists
       responses:
         '200':
@@ -836,14 +845,14 @@ paths:
             examples:
               Simple Bulk Edit Request:
                 $ref: '#/components/examples/TaxonomyBulkEditRequest'
-      description: Bulk editing lists
-      tags:
-        - bulk
   /api/v2/bulk/tags:
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
     post:
       summary: 'Bulk Store: Tags'
+      description: Bulk store tags
+      tags:
+        - bulk
       operationId: post-api-v2-bulk-tags
       responses:
         '200':
@@ -878,6 +887,9 @@ paths:
                 $ref: '#/components/examples/TagArrayRequest'
     patch:
       summary: 'Bulk Edit: Tags'
+      description: Bulk editing tags
+      tags:
+        - bulk
       operationId: post-api-v2-bulk-tags
       responses:
         '200':
@@ -910,9 +922,6 @@ paths:
             examples:
               Simple Bulk Edit Request:
                 $ref: '#/components/examples/TaxonomyBulkEditRequest'
-      description: Bulk editing tags
-      tags:
-        - bulk
   /api/v2/bulk/delete:
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
