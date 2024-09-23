@@ -4,6 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    ignore:
+      - "@redocly/cli"
     groups:
       npm-major:
         update-types:
@@ -17,8 +19,6 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    ignore:
-      - dependency-name: "laravel/cashier-paddle"
     groups:
       composer-major:
         update-types:

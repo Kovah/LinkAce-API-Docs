@@ -38,7 +38,7 @@ paths:
               - url
               - title
               - description
-              - is_private
+              - visibility
               - status
               - check_disabled
               - created_at
@@ -315,7 +315,7 @@ paths:
               - id
               - name
               - description
-              - is_private
+              - visibility
               - created_at
               - updated_at
           in: query
@@ -526,7 +526,7 @@ paths:
             enum:
               - id
               - name
-              - is_private
+              - visibility
               - created_at
               - updated_at
           in: query
@@ -674,8 +674,42 @@ paths:
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
     post:
-      summary: 'Bulk Edit: Links'
+      summary: 'Bulk Store: Links'
       operationId: post-api-v2-bulk-links
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Link'
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      security:
+        - api_token: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                models:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/LinkRequest'
+            examples:
+              Simple Bulk Store Request:
+                $ref: '#/components/examples/LinkArrayRequest'
+    patch:
+      summary: 'Bulk Edit: Links'
+      operationId: patch-api-v2-bulk-links
       responses:
         '200':
           description: OK
@@ -735,8 +769,42 @@ paths:
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
     post:
-      summary: 'Bulk Edit: Lists'
+      summary: 'Bulk Store: Lists'
       operationId: post-api-v2-bulk-lists
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/List'
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      security:
+        - api_token: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                models:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ListRequest'
+            examples:
+              Simple Bulk Store Request:
+                $ref: '#/components/examples/ListArrayRequest'
+    patch:
+      summary: 'Bulk Edit: Lists'
+      operationId: patch-api-v2-bulk-lists
       responses:
         '200':
           description: OK
@@ -775,6 +843,40 @@ paths:
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
     post:
+      summary: 'Bulk Store: Tags'
+      operationId: post-api-v2-bulk-tags
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      security:
+        - api_token: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                models:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/TagRequest'
+            examples:
+              Simple Bulk Store Request:
+                $ref: '#/components/examples/TagArrayRequest'
+    patch:
       summary: 'Bulk Edit: Tags'
       operationId: post-api-v2-bulk-tags
       responses:
@@ -1207,11 +1309,7 @@ components:
           nullable: true
           pattern: fa fa-link
         visibility:
-          type: integer
-          enum:
-            - 1
-            - 2
-            - 3
+          $ref: '#/components/schemas/Visibility'
         status:
           type: integer
           enum:
@@ -1254,7 +1352,7 @@ components:
           title: 'DuckDuckGo — Privacy, simplified.'
           description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
           icon: fa fa-link
-          is_private: false
+          visibility: 1
           status: 1
           check_disabled: false
           lists: [ ]
@@ -1284,8 +1382,8 @@ components:
           type: string
           nullable: true
           pattern: fa fa-link
-        is_private:
-          type: boolean
+        visibility:
+          $ref: '#/components/schemas/Visibility'
         status:
           type: integer
           enum:
@@ -1424,11 +1522,7 @@ components:
           type: string
           nullable: true
         visibility:
-          type: integer
-          enum:
-            - 1
-            - 2
-            - 3
+          $ref: '#/components/schemas/Visibility'
         created_at:
           type: string
           format: date-time
@@ -1534,11 +1628,7 @@ components:
         note:
           type: string
         visibility:
-          type: integer
-          enum:
-            - 1
-            - 2
-            - 3
+          $ref: '#/components/schemas/Visibility'
         created_at:
           type: string
           format: date-time
@@ -1600,7 +1690,7 @@ components:
           type: string
           example: 'Interesting article, may be useful for later research about state machines in Go.'
         is_private:
-          type: boolean
+          $ref: '#/components/schemas/Visibility'
       required:
         - link_id
         - note
@@ -1614,7 +1704,7 @@ components:
           type: string
           example: 'Interesting article, may be useful for later research about state machines in Go.'
         is_private:
-          type: boolean
+          $ref: '#/components/schemas/Visibility'
       required:
         - note
       x-tags:
@@ -1789,8 +1879,33 @@ components:
           - 9
           - 13
           - 29
-        is_private: false
+        visibility: 1
         check_disabled: false
+    LinkArrayRequest:
+      value:
+        models:
+          - url: 'https://laravel.com'
+            title: 'The PHP Framework for Web Artisans'
+            description: 'Laravel is a web application framework with expressive, elegant syntax. We’ve already laid the foundation — freeing you to create without sweating the small things.'
+            lists:
+              - 5
+            tags:
+              - 9
+              - 13
+              - 29
+            visibility: 2
+            check_disabled: false
+          - url: 'https://duckduckgo.com'
+            title: 'DuckDuckGo — Privacy, simplified.'
+            description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
+            lists:
+              - 5
+            tags:
+              - 9
+              - 13
+              - 29
+            visibility: 1
+            check_disabled: false
     LinkRequestWithStringTags:
       value:
         url: 'https://duckduckgo.com'
@@ -1798,7 +1913,7 @@ components:
         description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
         lists: 'List 1,List 2'
         tags: 'tag1,tag2,tag3'
-        is_private: false
+        visibility: 1
         check_disabled: false
     LinkRequestWithArrayTags:
       value:
@@ -1811,17 +1926,33 @@ components:
         tags:
           - tag1
           - tag2
-        is_private: false
+        visibility: 1
         check_disabled: false
     ListRequest:
       value:
         name: Web Development Tools
         description: Various tools and applications for a more productiove web development.
-        is_private: false
+        visibility: 1
+    ListArrayRequest:
+      value:
+        models:
+          - name: Web Development Tools
+            description: Various tools and applications for a more productiove web development.
+            visibility: 1
+          - name: All about Laravel
+            description: Various tools, packages and tutorials around the Laravel ecosystem.
+            visibility: 2
     TagRequest:
       value:
         name: programming
-        is_private: false
+        visibility: 1
+    TagArrayRequest:
+      value:
+        models:
+          - name: programming
+            visibility: 1
+          - name: laravel
+            visibility: 1
     LinkBulkEditRequest:
       value:
         models:
@@ -1847,11 +1978,11 @@ components:
       value:
         link_id: 23
         note: 'Interesting article, may be useful for later research about state machines in Go.'
-        is_private: false
+        visibility: 1
     NoteUpdateRequest:
       value:
         note: 'Interesting article, may be useful for later research about state machines in Go.'
-        is_private: false
+        visibility: 1
 tags:
   - name: links
   - name: lists
