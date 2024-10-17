@@ -28,11 +28,11 @@ module.exports = {
         altersDynamicFields: false,
       },
       {
-        key: 'is_private',
-        label: 'Private List',
-        type: 'boolean',
-        helpText: 'Choose if the list should stay private or is visible to guests, if guest mode is enabled.',
-        choices: ['Yes', 'No'],
+        key: 'visibility',
+        label: 'Visibility Setting',
+        type: 'integer',
+        helpText: 'Choose the list visibility: 1 - public, 2 - internal, 3 - private',
+        choices: [1, 2, 3],
         required: false,
         list: false,
         altersDynamicFields: false,
@@ -40,24 +40,26 @@ module.exports = {
     ],
     sample: {
       id: 12,
+      user_id: 1,
       name: 'Cool Browser Games',
       description: 'A list of my personal favorite browser games.',
-      user_id: 1,
+      visibility: 1,
       created_at: '2020-08-12T22:07:14.000000Z',
       updated_at: '2020-08-12T22:07:14.000000Z'
     },
     outputFields: [
       { key: 'id', label: 'Internal ID', type: 'integer' },
+      { key: 'user_id', label: 'ID of User', type: 'integer' },
       { key: 'name', label: 'Name' },
       { key: 'description', label: 'Description' },
-      { key: 'user_id', label: 'ID of User', type: 'integer' },
+      { key: 'visibility', label: 'Visibility' },
       { key: 'created_at', type: 'datetime', label: 'Creation Date' },
     ],
     perform: {
       body: {
         name: '{{bundle.inputData.name}}',
         description: '{{bundle.inputData.description}}',
-        is_private: '{{bundle.inputData.is_private}}'
+        visibility: '{{bundle.inputData.visibility}}',
       },
       headers: {
         'Content-Type': 'application/json',
@@ -66,7 +68,7 @@ module.exports = {
       },
       method: 'POST',
       removeMissingValuesFrom: { params: true, body: true },
-      url: '{{bundle.authData.base_url}}/api/v1/lists',
+      url: '{{bundle.authData.base_url}}/api/v2/lists',
     },
   },
 };

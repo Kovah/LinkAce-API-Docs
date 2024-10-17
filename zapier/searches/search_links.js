@@ -1,6 +1,6 @@
 const perform = async (z, bundle) => {
   const options = {
-    url: `${bundle.authData.base_url}/api/v1/search/links`,
+    url: `${bundle.authData.base_url}/api/v2/search/links`,
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -12,7 +12,7 @@ const perform = async (z, bundle) => {
       order_by: bundle.inputData.order_by,
       search_title: bundle.inputData.search_title,
       search_description: bundle.inputData.search_description,
-      private_only: bundle.inputData.private_only,
+      visibility: bundle.inputData.visibility,
       broken_only: bundle.inputData.broken_only,
       empty_lists: bundle.inputData.empty_lists,
       empty_tags: bundle.inputData.empty_tags,
@@ -69,11 +69,11 @@ module.exports = {
         altersDynamicFields: false
       },
       {
-        key: 'private_only',
-        type: 'boolean',
-        label: 'Private links only',
-        helpText: 'Enables searching in the description.',
-        choices: ['Yes', 'No'],
+        key: 'visibility',
+        type: 'integer',
+        label: 'Link Visibility',
+        helpText: 'Search by link visibility: 1 - public, 2 - internal, 3 - private',
+        choices: [1, 2, 3],
         required: false,
         list: false,
         altersDynamicFields: false
@@ -125,7 +125,7 @@ module.exports = {
       url: 'https://trimps.github.io/',
       title: 'Trimps 5.9.2',
       description: 'Trimps',
-      is_private: false,
+      visibility: 1,
       created_at: '2023-04-13T15:43:12.000000Z',
       updated_at: '2023-04-13T15:43:12.000000Z',
       deleted_at: null,

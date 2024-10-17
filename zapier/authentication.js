@@ -2,7 +2,7 @@ module.exports = {
   type: 'custom',
   connectionLabel: 'Self-Hosted LinkAce at {{bundle.authData.base_url}}',
   test: {
-    url: '{{bundle.authData.base_url}}/api/v1/links',
+    url: '{{bundle.authData.base_url}}/api/v2/links',
     method: 'GET',
     headers: {
       'Authorization': 'Bearer {{bundle.authData.api_token}}',
@@ -20,7 +20,7 @@ module.exports = {
       label: 'LinkAce URL',
       type: 'string',
       helpText: 'Enter the URL of your LinkAce installation including the protocol such as https://, and without a leading slash.',
-      inputFormat: '{{input}}/api/v1/...'
+      inputFormat: '{{input}}/api/v2/...'
     },
     {
       computed: false,

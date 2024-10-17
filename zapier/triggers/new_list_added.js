@@ -1,6 +1,6 @@
 const perform = async (z, bundle) => {
   const options = {
-    url: `${bundle.authData.base_url}/api/v1/lists`,
+    url: `${bundle.authData.base_url}/api/v2/lists`,
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -35,7 +35,7 @@ module.exports = {
       user_id: 1,
       name: 'CSS Frameworks',
       description: null,
-      is_private: false,
+      visibility: 1,
       created_at: '2020-01-24T13:13:02.000000Z',
       updated_at: '2020-01-24T13:13:02.000000Z',
       deleted_at: null,
@@ -45,7 +45,7 @@ module.exports = {
       { key: 'user_id', label: 'ID of the User',type: 'integer' },
       { key: 'name', label: 'List name' },
       { key: 'description', label: 'List description' },
-      { key: 'is_private', label: 'List is private', type: 'boolean' },
+      { key: 'visibility', label: 'List visibility', type: 'integer' },
       { key: 'created_at', label: 'Creation Date', type: 'datetime' },
       { key: 'updated_at', label: 'Update Date', type: 'datetime' },
       { key: 'deleted_at', label: 'Deletion Date', type: 'datetime' },

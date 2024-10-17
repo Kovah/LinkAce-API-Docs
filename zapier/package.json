@@ -1,6 +1,6 @@
 {
   "name": "linkace",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "LinkAce is a self-hosted bookmark archive to help you store and later search through the websites you love.",
   "main": "index.js",
   "scripts": {
@@ -14,9 +14,9 @@
     "zapier-platform-core": "15.5.1"
   },
   "devDependencies": {
-    "jest": "^29.5.0",
-    "should": "^13.2.0",
-    "zapier-platform-cli": "^14.0.0"
+    "jest": "^29.6.4",
+    "should": "^13.2.3",
+    "zapier-platform-cli": "^15.17.0"
   },
   "private": true,
   "zapier": {

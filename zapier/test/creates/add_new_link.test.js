@@ -20,7 +20,7 @@ describe('creates', () => {
         url: 'https://www.duckduckgo.com?' + dataModifier,
         title: 'DuckDuckGo ' + dataModifier,
         description: 'The DuckDuckGo Search Engine ' + dataModifier,
-        is_private: true
+        visibility: 1
       }
     };
 

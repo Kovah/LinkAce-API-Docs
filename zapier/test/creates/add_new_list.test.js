@@ -19,7 +19,7 @@ describe('creates', () => {
       inputData: {
         name: 'My List ' + dataModifier,
         description: 'A new example List ' + dataModifier,
-        is_private: true
+        visibility: 1
       }
     };
 

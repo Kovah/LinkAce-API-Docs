@@ -18,7 +18,7 @@ describe('creates', () => {
       },
       inputData: {
         name: 'tag-' + dataModifier,
-        is_private: true,
+        visibility: 1
       }
     };
 

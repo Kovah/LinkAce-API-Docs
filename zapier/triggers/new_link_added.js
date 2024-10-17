@@ -1,6 +1,6 @@
 const perform = async (z, bundle) => {
   const options = {
-    url: `${bundle.authData.base_url}/api/v1/links`,
+    url: `${bundle.authData.base_url}/api/v2/links`,
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -37,7 +37,7 @@ module.exports = {
       url: 'https://trimps.github.io/',
       title: 'Trimps 5.9.2',
       description: 'Trimps',
-      is_private: false,
+      visibility: 1,
       created_at: '2023-04-13T15:43:12.000000Z',
       updated_at: '2023-04-13T15:43:12.000000Z',
       deleted_at: null,
@@ -52,7 +52,7 @@ module.exports = {
       { key: 'url', label: 'URL' },
       { key: 'title', label: 'Title' },
       { key: 'description', label: 'Description' },
-      { key: 'is_private', label: 'Link is private', type: 'boolean' },
+      { key: 'visibility', label: 'Link visibility', type: 'integer' },
       { key: 'created_at', label: 'Creation Date', type: 'datetime' },
       { key: 'updated_at', label: 'Update Date', type: 'datetime' },
       { key: 'deleted_at', label: 'Deletion Date', type: 'datetime' },
