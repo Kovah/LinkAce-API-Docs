@@ -50,3 +50,10 @@ After sending the request with the HTTP status `200`, you will get a response th
   "created_at": "2020-03-09T19:33:23.000000Z",
 }
 ```
+
+## Compatibility with various clients
+
+Please notice that the clients acting with the LinkAce API need to send proper requests. This includes:
+- a `Content-Length` header, if the transfer is not chunked,
+- a `Content-Type` header with the value of `application/json`,
+- a `Accept` header with the value of `application/json`.
