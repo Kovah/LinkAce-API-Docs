@@ -5,9 +5,9 @@ The source of this API documentation can be found [on Github](https://github.com
 ## Usage
 ### Generating an API key
 
-To use the API, you have to generate an API key in the LinkAce user settings. If you have an API key already, use this one. Else click the "Generate Token" to generate a new one.
+To use the API, you have to generate an API key in the LinkAce user settings. Please notice that API tokens changed with v2 of LinkAce and can be created multiple times for various clients or applications. API tokens will in this case be differentiated by their name.
 
-![Preview of the user settings](/images/linkace_settings_api_key.png)
+![Preview of the user settings](/images/linkacev2_user_api_tokens.png)
 
 ### Using the API key
 
