@@ -7,8 +7,7 @@ The source of this API documentation can be found [on Github](https://github.com
 
 To use the API, you have to generate an API key in the LinkAce user settings. If you have an API key already, use this one. Else click the "Generate Token" to generate a new one.
 
-![Preview of the user
-settings](/images/linkace_settings_api_key.png)
+![Preview of the user settings](/images/linkace_settings_api_key.png)
 
 ### Using the API key
 
@@ -20,7 +19,7 @@ It highly depends on the system you use to work with the LinkAce API. In this ex
 
 ```bash
 curl --request POST \
-  --url https://your-linkace-url.com/api/v1/links \
+  --url https://your-linkace-url.com/api/v2/links \
   --header 'accept: application/json' \
   --header 'Content-Type: application/json' \
   --header 'authorization: Bearer YOUR-API-KEY-HERE' \
@@ -30,7 +29,7 @@ curl --request POST \
     "description":"",
     "lists":[],
     "tags":[],
-    "is_private":false,
+    "visibility":1,
     "check_disabled":false
     }'
 ```
@@ -39,11 +38,11 @@ After sending the request with the HTTP status `200`, you will get a response th
 
 ```json
 {
-  "id": 1
+  "id": 1,
   "url": "https://duckduckgo.com",
   "title": "DuckDuckGo",
   "description": "",
-  "is_private": false,
+  "visibility": 1,
   "user_id": 1,
   "icon": "fa fa-link",
   "updated_at": "2020-03-09T19:33:23.000000Z",
