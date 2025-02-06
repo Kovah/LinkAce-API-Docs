@@ -13,6 +13,26 @@ servers:
   - url: 'https://demo.linkace.org'
     description: Demo Server
 paths:
+  /api/version:
+    parameters:
+      - $ref: '#/components/parameters/DefaultAccept'
+    get:
+      summary: 'API Version'
+      operationId: get-api-version
+      description: '<div><span class="since">Available since: v2.1.0</span></div>Get the current API version supported by LinkAce'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  version:
+                    type: string
+                    example: 'v2'
+      tags:
+        - General
   /api/v2/links:
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
@@ -50,7 +70,7 @@ paths:
       security:
         - api_token: []
       tags:
-        - links
+        - Links
     post:
       summary: 'Links: Create'
       operationId: post-api-v2-links
@@ -86,7 +106,7 @@ paths:
         - api_token: []
       description: Create a new Link.
       tags:
-        - links
+        - Links
   '/api/v2/links/{link_id}':
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
@@ -113,7 +133,7 @@ paths:
         - api_token: []
       description: 'Get one specific link, including his lists and tags.'
       tags:
-        - links
+        - Links
     patch:
       summary: 'Links: Update'
       operationId: patch-api-v2-links-link_id
@@ -150,7 +170,7 @@ paths:
         - api_token: []
       description: Update one specific link.
       tags:
-        - links
+        - Links
     delete:
       summary: 'Links: Delete'
       operationId: delete-api-v2-links-link_id
@@ -167,15 +187,15 @@ paths:
         - api_token: []
       description: Delete one specific link.
       tags:
-        - links
+        - Links
   /api/v2/search/links:
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
     get:
       summary: Search Links
       tags:
-        - search
-        - links
+        - Search
+        - Links
       responses:
         '200':
           description: OK
@@ -268,8 +288,8 @@ paths:
     get:
       summary: 'Links: Notes for a Link'
       tags:
-        - notes
-        - links
+        - Notes
+        - Links
       responses:
         '200':
           description: OK
@@ -293,7 +313,7 @@ paths:
     get:
       summary: 'Lists: Get all Lists'
       tags:
-        - lists
+        - Lists
       responses:
         '200':
           description: OK
@@ -352,7 +372,7 @@ paths:
                 $ref: '#/components/examples/ListRequest'
       description: Create a new List.
       tags:
-        - lists
+        - Lists
   '/api/v2/lists/{list_id}':
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
@@ -364,7 +384,7 @@ paths:
     get:
       summary: 'Lists: List Details'
       tags:
-        - lists
+        - Lists
       responses:
         '200':
           description: OK
@@ -412,7 +432,7 @@ paths:
                 $ref: '#/components/examples/ListRequest'
       description: Update one specific list.
       tags:
-        - lists
+        - Lists
     delete:
       summary: 'Lists: Delete'
       operationId: delete-api-v2-lists-list_id
@@ -429,7 +449,7 @@ paths:
         - api_token: []
       description: Delete one specific list.
       tags:
-        - lists
+        - Lists
   '/api/v2/lists/{list_id}/links':
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
@@ -441,7 +461,7 @@ paths:
     get:
       summary: 'Lists: Links for a List'
       tags:
-        - lists
+        - Lists
       responses:
         '200':
           description: OK
@@ -465,8 +485,8 @@ paths:
     get:
       summary: Search Lists for Link Editing
       tags:
-        - search
-        - lists
+        - Search
+        - Lists
       responses:
         '200':
           description: OK
@@ -505,7 +525,7 @@ paths:
     get:
       summary: 'Tags: Get all Tags'
       tags:
-        - tags
+        - Tags
       responses:
         '200':
           description: OK
@@ -563,7 +583,7 @@ paths:
                 $ref: '#/components/examples/TagRequest'
       description: Create a new tag.
       tags:
-        - tags
+        - Tags
   '/api/v2/tags/{tag_id}':
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
@@ -575,7 +595,7 @@ paths:
     get:
       summary: 'Tags: Tag Details'
       tags:
-        - tags
+        - Tags
       responses:
         '200':
           description: OK
@@ -623,7 +643,7 @@ paths:
                 $ref: '#/components/examples/TagRequest'
       description: Update one specific Tag.
       tags:
-        - tags
+        - Tags
     delete:
       summary: 'Tag: Delete'
       operationId: delete-api-v2-tags-tag_id
@@ -640,7 +660,7 @@ paths:
         - api_token: []
       description: Delete one specific tag.
       tags:
-        - tags
+        - Tags
   '/api/v2/tags/{tag_id}/links':
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
@@ -652,7 +672,7 @@ paths:
     get:
       summary: 'Tags: Links for a Tag'
       tags:
-        - tags
+        - Tags
       responses:
         '200':
           description: OK
@@ -677,7 +697,7 @@ paths:
       summary: 'Bulk Store: Links'
       description: Bulk store links
       tags:
-        - bulk
+        - Bulk
       operationId: post-api-v2-bulk-links
       responses:
         '200':
@@ -714,7 +734,7 @@ paths:
       summary: 'Bulk Edit: Links'
       description: Bulk editing links
       tags:
-        - bulk
+        - Bulk
       operationId: patch-api-v2-bulk-links
       responses:
         '200':
@@ -775,7 +795,7 @@ paths:
       summary: 'Bulk Store: Lists'
       description: Bulk store lists
       tags:
-        - bulk
+        - Bulk
       operationId: post-api-v2-bulk-lists
       responses:
         '200':
@@ -812,7 +832,7 @@ paths:
       summary: 'Bulk Edit: Lists'
       description: Bulk editing lists
       tags:
-        - bulk
+        - Bulk
       operationId: patch-api-v2-bulk-lists
       responses:
         '200':
@@ -852,7 +872,7 @@ paths:
       summary: 'Bulk Store: Tags'
       description: Bulk store tags
       tags:
-        - bulk
+        - Bulk
       operationId: post-api-v2-bulk-tags
       responses:
         '200':
@@ -889,7 +909,7 @@ paths:
       summary: 'Bulk Edit: Tags'
       description: Bulk editing tags
       tags:
-        - bulk
+        - Bulk
       operationId: post-api-v2-bulk-tags
       responses:
         '200':
@@ -977,15 +997,15 @@ paths:
                   type: 'links'
       description: Bulk deletion of links, lists or tags
       tags:
-        - bulk
+        - Bulk
   /api/v2/search/tags:
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
     get:
       summary: Search Tags for Link Editing
       tags:
-        - search
-        - tags
+        - Search
+        - Tags
       responses:
         '200':
           description: OK
@@ -1051,7 +1071,7 @@ paths:
               Note Creation Request:
                 $ref: '#/components/examples/NoteCreateRequest'
       tags:
-        - notes
+        - Notes
   '/api/v2/notes/{note_id}':
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
@@ -1092,7 +1112,7 @@ paths:
               Note Update Request:
                 $ref: '#/components/examples/NoteUpdateRequest'
       tags:
-        - notes
+        - Notes
     delete:
       summary: 'Note: Delete'
       operationId: delete-api-v2-notes-note_id
@@ -1109,7 +1129,7 @@ paths:
       security:
         - api_token: []
       tags:
-        - notes
+        - Notes
   /api/v2/trash/links:
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
@@ -1128,7 +1148,7 @@ paths:
           description: Unauthorized
       operationId: get-api-v2-trash-links
       tags:
-        - trash
+        - Trash
       description: Get all trashed links.
       security:
         - api_token: []
@@ -1150,7 +1170,7 @@ paths:
           description: Unauthorized
       operationId: get-api-v2-trash-lists
       tags:
-        - trash
+        - Trash
       description: Get all trashed lists.
       security:
         - api_token: []
@@ -1172,7 +1192,7 @@ paths:
           description: Unauthorized
       operationId: get-api-v2-trash-tags
       tags:
-        - trash
+        - Trash
       description: Get all trashed tags.
       security:
         - api_token: []
@@ -1194,7 +1214,7 @@ paths:
           description: Unauthorized
       operationId: get-api-v2-trash-notes
       tags:
-        - trash
+        - Trash
       description: Get all trashed notes.
       security:
         - api_token: []
@@ -1232,7 +1252,7 @@ paths:
               required:
                 - model
       tags:
-        - trash
+        - Trash
   /api/v2/trash/restore:
     parameters:
       - $ref: '#/components/parameters/DefaultAccept'
@@ -1273,7 +1293,7 @@ paths:
                 - id
         description: ''
       tags:
-        - trash
+        - Trash
 components:
   schemas:
     Link:
@@ -1993,9 +2013,10 @@ components:
         note: 'Interesting article, may be useful for later research about state machines in Go.'
         visibility: 1
 tags:
-  - name: links
-  - name: lists
-  - name: tags
-  - name: notes
-  - name: trash
-  - name: search
+  - name: General
+  - name: Links
+  - name: Lists
+  - name: Tags
+  - name: Notes
+  - name: Trash
+  - name: Search
