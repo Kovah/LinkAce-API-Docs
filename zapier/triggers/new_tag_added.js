@@ -4,7 +4,7 @@ const perform = async (z, bundle) => {
     method: 'GET',
     headers: {
       Accept: 'application/json',
-      Authorization: bundle.authData.api_token,
+      Authorization: `Bearer ${bundle.authData.api_token}`,
       'X-BASE-URL': bundle.authData.base_url,
     },
     params: {
@@ -26,7 +26,6 @@ module.exports = {
     label: 'New Tag Added',
     description: 'Triggers when a new Tag was added to LinkAce.',
     hidden: false,
-    important: true,
   },
   operation: {
     perform: perform,

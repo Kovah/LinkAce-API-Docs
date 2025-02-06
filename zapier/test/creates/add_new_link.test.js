@@ -32,6 +32,6 @@ describe('creates', () => {
     expect(result.url).toEqual('https://www.duckduckgo.com?' + dataModifier)
     expect(result.title).toEqual('DuckDuckGo ' + dataModifier)
     expect(result.description).toEqual('The DuckDuckGo Search Engine ' + dataModifier)
-    expect(result.is_private).toEqual(true);
+    expect(result.visibility).toEqual(1);
   });
 });

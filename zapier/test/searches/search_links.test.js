@@ -27,6 +27,7 @@ describe('searches', () => {
 
     expect(result.length).toBeGreaterThan(0);
     expect(result[0].url).toMatch(/https?:\/\//);
+    expect(result[0].visibility).toEqual(1);
     expect(result[0].title.length).toBeGreaterThan(0);
   });
 });

@@ -58,7 +58,7 @@ module.exports = {
         label: 'Visibility Setting',
         type: 'integer',
         helpText: 'Choose the link visibility: 1 - public, 2 - internal, 3 - private',
-        choices: [1, 2, 3],
+        choices: {1: 'Public', 2: 'Internal', 3: 'External'},
         required: false,
         list: false,
         altersDynamicFields: false
@@ -68,7 +68,7 @@ module.exports = {
         label: 'Disable Check',
         type: 'boolean',
         helpText: 'Enable if you don\'t want LinkAce to check the link periodically.',
-        choices: ['Yes', 'No'],
+        choices: {true: 'Yes', false: 'No'},
         required: false,
         list: false,
         altersDynamicFields: false
@@ -93,7 +93,7 @@ module.exports = {
       {key: 'url', label: 'URL'},
       {key: 'title', label: 'Title'},
       {key: 'description', label: 'Description'},
-      {key: 'visibility', label: 'Visibility'},
+      {key: 'visibility', label: 'Visibility', type: 'integer'},
       {key: 'created_at', type: 'datetime', label: 'Creation Date'}
     ],
     perform: {

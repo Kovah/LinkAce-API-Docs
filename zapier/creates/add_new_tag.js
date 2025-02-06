@@ -5,7 +5,6 @@ module.exports = {
     label: 'Add a New Tag',
     description: 'This action adds a new tag to LinkAce',
     hidden: false,
-    important: true,
   },
   operation: {
     inputFields: [
@@ -22,7 +21,7 @@ module.exports = {
         label: 'Visibility Setting',
         type: 'integer',
         helpText: 'Choose the tag visibility: 1 - public, 2 - internal, 3 - private',
-        choices: [1, 2, 3],
+        choices: {1: 'Public', 2: 'Internal', 3: 'External'},
         required: false,
         altersDynamicFields: false,
       }
@@ -39,7 +38,7 @@ module.exports = {
       { key: 'id', label: 'Internal ID', type: 'integer' },
       { key: 'user_id', label: 'ID of User', type: 'integer' },
       { key: 'name', label: 'Name' },
-      {key: 'visibility', label: 'Visibility'},
+      {key: 'visibility', label: 'Visibility', type: 'integer'},
       { key: 'created_at', type: 'datetime', label: 'Creation Date' },
     ],
     perform: {

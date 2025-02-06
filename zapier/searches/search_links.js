@@ -5,7 +5,7 @@ const perform = async (z, bundle) => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${bundle.authData.api_token}`,
+      Authorization: `Bearer ${bundle.authData.api_token}`
     },
     params: {
       query: bundle.inputData.query,
@@ -15,8 +15,8 @@ const perform = async (z, bundle) => {
       visibility: bundle.inputData.visibility,
       broken_only: bundle.inputData.broken_only,
       empty_lists: bundle.inputData.empty_lists,
-      empty_tags: bundle.inputData.empty_tags,
-    },
+      empty_tags: bundle.inputData.empty_tags
+    }
   };
 
   return z.request(options).then((response) => {
@@ -34,7 +34,7 @@ module.exports = {
   noun: 'Link',
   display: {
     label: 'Search for Links',
-    description: 'Search for links by various options.',
+    description: 'Search for links by various options.'
   },
   operation: {
     perform: perform,
@@ -73,7 +73,7 @@ module.exports = {
         type: 'integer',
         label: 'Link Visibility',
         helpText: 'Search by link visibility: 1 - public, 2 - internal, 3 - private',
-        choices: [1, 2, 3],
+        choices: {1: 'Public', 2: 'Internal', 3: 'External'},
         required: false,
         list: false,
         altersDynamicFields: false
@@ -83,7 +83,7 @@ module.exports = {
         type: 'boolean',
         label: 'Broken links only',
         helpText: 'Search for broken links only (Status is not "Ok").',
-        choices: ['Yes', 'No'],
+        choices: {true: 'Yes', false: 'No'},
         required: false,
         list: false,
         altersDynamicFields: false
@@ -93,7 +93,7 @@ module.exports = {
         type: 'boolean',
         label: 'Without lists',
         helpText: 'Search for links without lists attached.',
-        choices: ['Yes', 'No'],
+        choices: {true: 'Yes', false: 'No'},
         required: false,
         list: false,
         altersDynamicFields: false
@@ -103,7 +103,7 @@ module.exports = {
         type: 'boolean',
         label: 'Without tags',
         helpText: 'Search for links without tags attached.',
-        choices: ['Yes', 'No'],
+        choices: {true: 'Yes', false: 'No'},
         required: false,
         list: false,
         altersDynamicFields: false
@@ -113,11 +113,11 @@ module.exports = {
         type: 'string',
         label: 'Without tags',
         helpText: 'Search for links without tags attached.',
-        choices: ['title:asc', 'title:desc','created_at:asc', 'created_at:desc', 'url:asc', 'url:desc'],
+        choices: ['title:asc', 'title:desc', 'created_at:asc', 'created_at:desc', 'url:asc', 'url:desc'],
         required: false,
         list: false,
-        altersDynamicFields: false,
-      },
+        altersDynamicFields: false
+      }
     ],
     sample: {
       id: 90,
@@ -132,7 +132,7 @@ module.exports = {
       icon: 'brand.github',
       status: 1,
       check_disabled: false,
-      thumbnail: null,
+      thumbnail: null
     },
     outputFields: [
       {key: 'id', label: 'Internal ID', type: 'integer'},
@@ -140,8 +140,8 @@ module.exports = {
       {key: 'title', label: 'Title'},
       {key: 'description', label: 'Description'},
       {key: 'user_id', label: 'ID of User', type: 'integer'},
-      {key: 'is_private', type: 'boolean', label: 'Link is private'},
+      {key: 'visibility', type: 'integer', label: 'Visibility of the Link'},
       {key: 'created_at', type: 'datetime', label: 'Creation Date'}
-    ],
-  },
+    ]
+  }
 };

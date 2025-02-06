@@ -5,7 +5,6 @@ module.exports = {
     label: 'Add a New List',
     description: 'This action adds a new list to LinkAce',
     hidden: false,
-    important: true,
   },
   operation: {
     inputFields: [
@@ -32,7 +31,7 @@ module.exports = {
         label: 'Visibility Setting',
         type: 'integer',
         helpText: 'Choose the list visibility: 1 - public, 2 - internal, 3 - private',
-        choices: [1, 2, 3],
+        choices: {1: 'Public', 2: 'Internal', 3: 'External'},
         required: false,
         list: false,
         altersDynamicFields: false,
@@ -52,7 +51,7 @@ module.exports = {
       { key: 'user_id', label: 'ID of User', type: 'integer' },
       { key: 'name', label: 'Name' },
       { key: 'description', label: 'Description' },
-      { key: 'visibility', label: 'Visibility' },
+      { key: 'visibility', label: 'Visibility', type: 'integer'},
       { key: 'created_at', type: 'datetime', label: 'Creation Date' },
     ],
     perform: {

@@ -30,6 +30,6 @@ describe('creates', () => {
 
     expect(result.name).toEqual('My List ' + dataModifier);
     expect(result.description).toEqual('A new example List ' + dataModifier);
-    expect(result.is_private).toEqual(true);
+    expect(result.visibility).toEqual(1);
   });
 });

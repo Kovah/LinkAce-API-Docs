@@ -25,7 +25,6 @@ module.exports = {
     label: 'New List Added',
     description: 'Triggers when a new List was added to LinkAce.',
     hidden: false,
-    important: true,
   },
   operation: {
     perform: perform,

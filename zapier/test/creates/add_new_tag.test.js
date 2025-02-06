@@ -28,6 +28,6 @@ describe('creates', () => {
     );
 
     expect(result.name).toEqual('tag-' + dataModifier)
-    expect(result.is_private).toEqual(true)
+    expect(result.visibility).toEqual(1)
   });
 });

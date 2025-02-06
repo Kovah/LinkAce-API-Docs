@@ -2,7 +2,7 @@
 
 [Link to main repository](https://github.com/Kovah/LinkAce)
 
-This is the official reference of the LinkAce API. The complete reference, based on OpenAPI v3.0, can be found under [openapi/LinkAce-API.v1.yaml](./openapi/LinkAce-API.v1.yaml).
+This is the official reference of the LinkAce API. The complete reference, based on OpenAPI v3.0, can be found under [openapi/LinkAce-API.v2.yaml](./openapi/LinkAce-API.v2.yaml).
 
 The documentation of the API reference is deployed to Cloudflare Pages with the help of Redoc.
 

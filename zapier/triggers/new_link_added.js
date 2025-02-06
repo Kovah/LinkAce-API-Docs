@@ -25,7 +25,6 @@ module.exports = {
     label: 'New Link Added',
     description: 'Triggers when a new Link was added to LinkAce.',
     hidden: false,
-    important: true,
   },
   operation: {
     perform: perform,
