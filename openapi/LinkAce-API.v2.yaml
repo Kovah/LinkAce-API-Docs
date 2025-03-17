@@ -1907,7 +1907,7 @@ components:
         tags:
           - 9
           - 13
-          - 29
+          - 'Search Engines'
         visibility: 1
         check_disabled: false
     LinkArrayRequest:
@@ -1921,7 +1921,7 @@ components:
             tags:
               - 9
               - 13
-              - 29
+              - 'Search Engines'
             visibility: 2
             check_disabled: false
           - url: 'https://duckduckgo.com'
@@ -1932,7 +1932,7 @@ components:
             tags:
               - 9
               - 13
-              - 29
+              - 'Search Engines'
             visibility: 1
             check_disabled: false
     LinkRequestWithStringTags:
@@ -1950,11 +1950,11 @@ components:
         title: 'DuckDuckGo — Privacy, simplified.'
         description: 'The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs.'
         lists:
-          - List 1
-          - List 2
+          - 'List 1'
+          - 'List 2'
         tags:
-          - tag1
-          - tag2
+          - 'tag1'
+          - 'tag2'
         visibility: 1
         check_disabled: false
     ListRequest:
